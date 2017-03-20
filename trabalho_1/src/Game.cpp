@@ -31,7 +31,7 @@ Game::Game(string title, int width, int height){
 
     if(m_renderer == nullptr){
         printf("SDL_CreateRenderer error: %s\n", SDL_GetError());
-		return;
+        return;
     }
 
     m_state = new State();
@@ -45,6 +45,8 @@ Game::~Game(){
 }
 
 void Game::run(){
+    m_state->load_assets();
+
     while(!m_state->quit_requested()){
         m_state->update();
         m_state->render();

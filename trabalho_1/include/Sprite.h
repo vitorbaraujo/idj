@@ -1,10 +1,11 @@
+#ifndef SPRITE_H
+#define SPRITE_H
+
 #include <SDL2/SDL.h>
 
 #include <iostream>
 
 using std::string;
-
-// class Game;
 
 class Sprite {
     private:
@@ -24,3 +25,5 @@ class Sprite {
         int get_height();
         bool is_open();
 };
+
+#endif

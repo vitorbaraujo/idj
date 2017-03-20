@@ -1,3 +1,6 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include <iostream>
 
 #include <SDL2/SDL.h>
@@ -23,3 +26,5 @@ class Game {
         State& get_state();
         static Game& get_instance();
 };
+
+#endif

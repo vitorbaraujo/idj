@@ -1,3 +1,6 @@
+#ifndef STATE_H
+#define STATE_H
+
 #include <SDL2/SDL.h>
 
 class Sprite;
@@ -13,4 +16,7 @@ class State {
         bool quit_requested();
         void update(float dt = 0);
         void render();
+        void load_assets();
 };
+
+#endif

@@ -2,7 +2,7 @@
 #include "Sprite.h"
 
 State::State() : m_requested_quit(false) {
-    m_bg = new Sprite("res/img/ocean.jpg");
+    m_bg = new Sprite();
 }
 
 bool State::quit_requested(){
@@ -16,5 +16,9 @@ void State::update(float dt){
 }
 
 void State::render(){
-	m_bg->render(0, 0);
+    m_bg->render(0, 0);
+}
+
+void State::load_assets(){
+    m_bg->open("res/img/ocean.jpg");
 }
