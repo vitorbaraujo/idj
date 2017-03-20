@@ -1,14 +1,16 @@
 #include <SDL2/SDL.h>
 
+class Sprite;
+
 class State {
     private:
-        Sprite bg;
-        bool requested_quit;
+        Sprite* m_bg;
+        bool m_requested_quit;
 
     public:
         State();
 
         bool quit_requested();
-        void update(float dt);
+        void update(float dt = 0);
         void render();
-}
+};

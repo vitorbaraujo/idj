@@ -1,10 +1,16 @@
 #include <SDL2/SDL.h>
 
+#include <iostream>
+
+using std::string;
+
+// class Game;
+
 class Sprite {
     private:
-        SDL_Texture* texture;
-        int widht, height;
-        SDL_Rect clip_rect;
+        SDL_Texture* m_texture;
+        int m_width, m_height;
+        SDL_Rect* m_clip_rect;
 
     public:
         Sprite();
@@ -17,4 +23,4 @@ class Sprite {
         int get_width();
         int get_height();
         bool is_open();
-}
+};
