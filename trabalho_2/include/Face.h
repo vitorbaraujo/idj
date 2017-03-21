@@ -10,7 +10,7 @@ class Face : public GameObject {
 		Sprite m_sp;
 
 	public:
-		Face(float x, float y);
+		Face(int x, int y);
 		
 		void damage(int damage);
 		void update(float dt);

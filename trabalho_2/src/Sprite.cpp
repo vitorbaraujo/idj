@@ -36,8 +36,6 @@ void Sprite::set_clip(int x, int y, int w, int h){
 }
 
 void Sprite::render(int x, int y){
-    printf("sprite render\n");
-
     SDL_Rect* dest_rect = new SDL_Rect { x, y, m_clip_rect->w, m_clip_rect->h };
 
     SDL_RenderCopy(Game::get_instance().get_renderer(), m_texture, m_clip_rect, dest_rect);

@@ -3,17 +3,17 @@
 
 class Rect {
 	private:
-		float m_x, m_y;
-		float m_w, m_h;
+		int m_x, m_y;
+		int m_w, m_h;
 
 	public:
-		Rect(float x = 0, float y = 0, float w = 0, float h = 0);
+		Rect(int x = 0, int y = 0, int w = 0, int h = 0);
 
-		float get_x();
-		float get_y();
-		float get_w();
-		float get_h();
-		bool is_inside(float mouse_x, float mouse_y);
+		int get_x();
+		int get_y();
+		int get_w();
+		int get_h();
+		bool is_inside(int mouse_x, int mouse_y);
 
 };
 

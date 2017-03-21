@@ -1,26 +1,31 @@
 #include "Rect.h"
+#include <iostream>
 
-Rect::Rect(float x, float y, float w, float h) : m_x(x), m_y(y), m_w(w), m_h(h) {
-
+Rect::Rect(int x, int y, int w, int h) : m_x(x), m_y(y), m_w(w), m_h(h) {
+	m_x -= m_w / 2;
+	m_y -= m_h / 2;
 }
 
-float Rect::get_x(){
+int Rect::get_x(){
 	return m_x;
 }
 
-float Rect::get_y(){
+int Rect::get_y(){
 	return m_y;
 }
 
-float Rect::get_w(){
+int Rect::get_w(){
 	return m_w;
 }
 
-float Rect::get_h(){
+int Rect::get_h(){
 	return m_h;
 }
 
-bool Rect::is_inside(float mouse_x, float mouse_y) {
-	// do this
-	return true;
+bool Rect::is_inside(int mouse_x, int mouse_y) {
+	if(mouse_x >= m_x && mouse_x <= (m_x + m_w) && mouse_y >= m_y && mouse_y <= (m_y + m_h)){
+		return true;
+	}
+
+	return false;
 }

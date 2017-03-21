@@ -1,0 +1,9 @@
+*.swp
+*.o
+*~
+lib
+obj
+*.d
+test/test
+*.so*
+

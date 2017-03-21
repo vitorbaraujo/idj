@@ -2,6 +2,10 @@
 #include "Sprite.h"
 #include "Face.h"
 
+#include <utility>
+
+using std::pair;
+
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
 }
@@ -18,46 +22,52 @@ void State::input() {
 
 	while(SDL_PollEvent(&event)) {
 		if(event.type == SDL_QUIT) {
-			printf("fechooou\n");
 			m_requested_quit = true;
 		}
 
 		if(event.type == SDL_MOUSEBUTTONDOWN) {
-			printf("clicou\n");	
 			int size = m_objects_array.size();
 
-			printf("size: %d\n", size);
 			for(int i = size - 1; i >= 0; i--) {
 				Face* face = (Face *) m_objects_array[i].get();
 
 				// fazer is_inside em Rect
-				// if(face->m_box.is_inside((float)mouse_x, (float)mouse_y)) {
-				// 	face->damage(rand() % 10 + 10);
-				// 	break;
-				// }
+				if(face->m_box.is_inside(mouse_x, mouse_y)) {
+					face->damage(rand() % 10 + 10);
+					break;
+				}
 			}
 		}
 
 		if(event.type == SDL_KEYDOWN) {
 			if(event.key.keysym.sym == SDLK_ESCAPE) {
-				printf("fechou no esc\n");
 				m_requested_quit = true;
 			}
 			else {
-				printf("adding object in mouse: {%d, %d}\n", mouse_x, mouse_y);
-				add_object((float)mouse_x, (float)mouse_y);
+				int random_angle = rand() % 361;
+				float angle = random_angle * acos(-1) / 180.0;
+
+				pair<int, int> C(mouse_x, mouse_y);
+				pair<int, int> P(mouse_x + 200, mouse_y);
+				pair<int, int> Q(P.first - C.first, P.second - C.second);
+
+				Q = pair<int, int>(	Q.first * cos(angle) - Q.second * sin(angle),
+									Q.first * sin(angle) + Q.second * cos(angle));
+
+
+				Q = pair<int, int>(	Q.first + C.first, Q.second + C.second);
+
+				add_object(Q.first, Q.second);
 			}
 		}
 	}
 }
 
-void State::add_object(float mouse_x, float mouse_y) {
+void State::add_object(int mouse_x, int mouse_y) {
 	// 200 pixels de distancia
-	printf("cria face\n");
 	Face* face = new Face(mouse_x, mouse_y);
-	printf("cria emplace\n");
+
 	m_objects_array.emplace_back(unique_ptr<GameObject>(face));
-	printf("fim add_object\n");
 }
 
 bool State::quit_requested(){
