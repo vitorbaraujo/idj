@@ -38,6 +38,7 @@ Game::Game(string title, int width, int height){
 }
 
 Game::~Game(){
+    delete(m_state);
     IMG_Quit();
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);

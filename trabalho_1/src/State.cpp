@@ -1,8 +1,7 @@
 #include "State.h"
 #include "Sprite.h"
 
-State::State() : m_requested_quit(false) {
-    m_bg = new Sprite();
+State::State() : m_requested_quit(false), m_bg(new Sprite()) {
 }
 
 bool State::quit_requested(){
