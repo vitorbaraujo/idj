@@ -65,8 +65,7 @@ bool State::quit_requested(){
 void State::update(float dt){
     input();
 
-    int size = m_objects_array.size();
-    for(int i = 0; i < size; i++) {
+    for(int i = 0; i < m_objects_array.size(); i++) {
         Face* face = (Face *)m_objects_array[i].get();
 
         if(face->is_dead()) {
