@@ -7,7 +7,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "GameObject.h"
+#include "game_object.h"
 
 using std::vector;
 using std::unique_ptr;

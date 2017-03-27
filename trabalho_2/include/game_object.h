@@ -1,7 +1,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include "Rect.h"
+#include "rectangle.h"
 
 class GameObject {
 	public:
@@ -11,7 +11,7 @@ class GameObject {
 		virtual void render() = 0;
 		virtual bool is_dead() = 0;
 
-		Rect m_box;
+		Rectangle m_box;
 };
 
 #endif

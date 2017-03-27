@@ -1,7 +1,7 @@
-#include "State.h"
-#include "Sprite.h"
-#include "Face.h"
-#include "Vec2.h"
+#include "state.h"
+#include "sprite.h"
+#include "face.h"
+#include "vector.h"
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
@@ -43,7 +43,7 @@ void State::input() {
                 int random_angle = rand() % 361;
                 double angle = (random_angle) * acos(-1) / 180.0;
 
-                Vec2 far_point(mouse_x + 200, mouse_y);
+                Vector far_point(mouse_x + 200, mouse_y);
                 far_point = far_point.rotate(far_point, angle, mouse_x, mouse_y);
 
                 add_object(far_point.get_x(), far_point.get_y());

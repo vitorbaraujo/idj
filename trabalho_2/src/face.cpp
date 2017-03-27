@@ -1,7 +1,7 @@
-#include "Face.h"
+#include "face.h"
 
 Face::Face(int x, int y) : m_hitpoints(30), m_sp(Sprite("res/img/penguinface.png")) {
-	m_box = Rect(x, y, m_sp.get_width(), m_sp.get_height());
+	m_box = Rectangle(x, y, m_sp.get_width(), m_sp.get_height());
 }
 
 void Face::damage(int damage){

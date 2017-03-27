@@ -1,8 +1,8 @@
 #ifndef FACE_H
 #define FACE_H
 
-#include "GameObject.h"
-#include "Sprite.h"
+#include "game_object.h"
+#include "sprite.h"
 
 class Face : public GameObject {
 	private:
