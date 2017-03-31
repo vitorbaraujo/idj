@@ -8,6 +8,8 @@ State::State() : m_requested_quit(false) {
 }
 
 State::~State() {
+    delete(m_bg);
+
     m_objects_array.clear();
 }
 
@@ -40,13 +42,15 @@ void State::input() {
                 m_requested_quit = true;
             }
             else {
-                int random_angle = rand() % 361;
+                int random_angle = rand() % 360;
                 double angle = (random_angle) * acos(-1) / 180.0;
 
-                Vector far_point(mouse_x + 200, mouse_y);
-                far_point = far_point.rotate(far_point, angle, mouse_x, mouse_y);
+                Vector new_point(mouse_x, mouse_y);
 
-                add_object(far_point.get_x(), far_point.get_y());
+                new_point.translate(200, 0);
+                new_point.rotate(angle, Vector(mouse_x, mouse_y));
+
+                add_object(new_point.get_x(), new_point.get_y());
             }
         }
     }
@@ -65,11 +69,9 @@ bool State::quit_requested(){
 void State::update(float dt){
     input();
 
-    for(int i = 0; i < m_objects_array.size(); i++) {
-        Face* face = (Face *)m_objects_array[i].get();
-
-        if(face->is_dead()) {
-            m_objects_array.erase(m_objects_array.begin() + i);
+    for(auto it = m_objects_array.begin(); it < m_objects_array.end(); ++it) {
+        if((*it)->is_dead()) {
+            m_objects_array.erase(it);
         }
     }
 }
@@ -77,7 +79,7 @@ void State::update(float dt){
 void State::render(){
     m_bg->render(0, 0);
 
-    for(object : m_objects_array) {
+    for(auto& object : m_objects_array) {
         object->render();
     }
 }

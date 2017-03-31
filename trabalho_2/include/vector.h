@@ -14,9 +14,9 @@ class Vector {
         int get_y();
         double length();
         void scale(int sx, int sy);
-        Vector translate(Vector p, int dx, int dy);
-        Vector rotate(Vector p, double angle);
-        Vector rotate(Vector p, double angle, int cx, int cy);
+        void translate(int dx, int dy);
+        void rotate(double angle);
+        void rotate(double angle, Vector c);
 };
 
 #endif

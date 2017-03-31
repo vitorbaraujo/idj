@@ -3,9 +3,9 @@
 using namespace std;
 
 int main(int argc, char** argv){
-    Game* game = new Game("IDJ", 1024, 600);
+    Game game("Vitor Barbosa de Araujo - 140033149", 1024, 600);
 
-    game->run();
+    game.run();
 
     return 0;
 }
