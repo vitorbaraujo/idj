@@ -5,6 +5,8 @@
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
+    m_tile_set = new TileSet(64, 64, "res/img/tileset.png");
+    m_tile_map = new TileMap("res/map/tileMap.txt", m_tile_set);
 }
 
 State::~State() {
@@ -78,6 +80,7 @@ void State::update(float dt){
 
 void State::render(){
     m_bg->render(0, 0);
+    m_tile_map->render(0, 0);
 
     for(auto& object : m_objects_array) {
         object->render();
