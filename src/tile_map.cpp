@@ -10,6 +10,8 @@ TileMap::~TileMap(){
 }
 
 void TileMap::load(string file){
+    m_tile_matrix.clear();
+
     fstream f(file, f.in);
     string s;
     int tile;
@@ -48,7 +50,7 @@ void TileMap::set_tile_set(TileSet* tile_set){
 }
 
 int& TileMap::at(int x, int y, int z){
-    int index = (z * m_map_width * m_map_height) + (y * m_map_width) + x;
+    int index = (z * m_map_width * m_map_height) + (x * m_map_height) + y;
 
     return m_tile_matrix[index];
 }
@@ -60,12 +62,13 @@ void TileMap::render(int camera_x, int camera_y){
 }
 
 void TileMap::render_layer(int layer, int camera_x, int camera_y){
-    for(int x = 0; x < m_map_width; ++x){
-        for(int y = 0; y < m_map_height; ++y){
-            int to_x = x * m_tile_set->get_tile_width();
-            int to_y = y * m_tile_set->get_tile_height();
+    for(int x = 0; x < m_map_height; ++x){
+        for(int y = 0; y < m_map_width; ++y){
+            int index = at(x, y, layer);
+            int rx = x * m_tile_set->get_tile_width();
+            int ry = y * m_tile_set->get_tile_height();
 
-            m_tile_set->render(at(x, y ,layer), to_x, to_y);
+            m_tile_set->render(index, rx, ry);
         }
     }
 }

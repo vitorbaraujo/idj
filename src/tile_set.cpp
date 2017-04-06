@@ -7,13 +7,15 @@ TileSet::TileSet(int width, int height, string filename) : m_tile_width(width), 
 }
 
 void TileSet::render(int index, double x, double y) {
-    if(index >= m_rows * m_columns){
-        printf("Invalid index\n");
+    if(index < 0 || index >= m_rows * m_columns){
         return;
     }
 
-    m_tile_set.set_clip((int)x, (int)y, m_tile_width, m_tile_height);
-    m_tile_set.render((int)x, (int)y);
+    int xx = m_tile_height * (index % m_columns);
+    int yy = m_tile_width * (index / m_columns);
+
+    m_tile_set.set_clip(xx, yy, m_tile_width, m_tile_height);
+    m_tile_set.render(y, x);
 }
 
 int TileSet::get_tile_width() {
