@@ -15,7 +15,7 @@ void TileSet::render(int index, double x, double y) {
     int yy = m_tile_height * (index / m_columns);
 
     m_tile_set.set_clip(xx, yy, m_tile_width, m_tile_height);
-    m_tile_set.render(y, x);
+    m_tile_set.render(x, y);
 }
 
 int TileSet::get_tile_width() {

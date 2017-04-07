@@ -50,7 +50,7 @@ void TileMap::set_tile_set(TileSet* tile_set){
 }
 
 int& TileMap::at(int x, int y, int z){
-    int index = (z * m_map_width * m_map_height) + (x * m_map_height) + y;
+    int index = (z * m_map_width * m_map_height) + (y * m_map_height) + x;
 
     return m_tile_matrix[index];
 }
@@ -62,8 +62,8 @@ void TileMap::render(int camera_x, int camera_y){
 }
 
 void TileMap::render_layer(int layer, int camera_x, int camera_y){
-    for(int x = 0; x < m_map_height; ++x){
-        for(int y = 0; y < m_map_width; ++y){
+    for(int x = 0; x < m_map_width; ++x){
+        for(int y = 0; y < m_map_height; ++y){
             int index = at(x, y, layer);
             int rx = x * m_tile_set->get_tile_width();
             int ry = y * m_tile_set->get_tile_height();
