@@ -1,7 +1,7 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
-#include <SDL2/SDL_image.h>
+#include "SDL2/SDL_image.h"
 
 #include <iostream>
 #include <unordered_map>

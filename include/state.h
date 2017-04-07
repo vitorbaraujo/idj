@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory> // unique_ptr
 
-#include <SDL2/SDL.h>
+#include "SDL2/SDL.h"
 
 #include "game_object.h"
 #include "tile_set.h"
