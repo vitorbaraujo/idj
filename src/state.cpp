@@ -5,8 +5,8 @@
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
-    m_tile_set = new TileSet(64, 64, "res/img/tileset.png");
-    m_tile_map = new TileMap("res/map/tileMap.txt", m_tile_set);
+    m_tile_set = new TileSet(64, 64, "img/tileset.png");
+    m_tile_map = new TileMap("map/tileMap.txt", m_tile_set);
 }
 
 State::~State() {
@@ -88,5 +88,5 @@ void State::render(){
 }
 
 void State::load_assets(){
-    m_bg->open("res/img/ocean.jpg");
+    m_bg->open("img/ocean.jpg");
 }
