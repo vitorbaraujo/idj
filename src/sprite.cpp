@@ -1,5 +1,6 @@
 #include "sprite.h"
 #include "game.h"
+#include "resources.h"
 
 Sprite::Sprite() : m_texture(nullptr) {
 
@@ -10,17 +11,10 @@ Sprite::Sprite(string filename) : m_texture(nullptr){
 }
 
 Sprite::~Sprite(){
-    if(m_texture){
-        SDL_DestroyTexture(m_texture);
-    }
 }
 
 void Sprite::open(string filename){
-    if(m_texture){
-        SDL_DestroyTexture(m_texture);
-    }
-
-    m_texture = IMG_LoadTexture(Game::get_instance().get_renderer(), filename.c_str());
+    m_texture = Resources::get_image(filename);
 
     if(m_texture == nullptr){
         printf("IMG_LoadTexture error: %s\n", SDL_GetError());

@@ -8,6 +8,8 @@
 #include <SDL2/SDL.h>
 
 #include "game_object.h"
+#include "tile_set.h"
+#include "tile_map.h"
 
 using std::vector;
 using std::unique_ptr;
@@ -17,6 +19,8 @@ class Sprite;
 class State {
     private:
         Sprite* m_bg;
+        TileSet* m_tile_set;
+        TileMap* m_tile_map;
         bool m_requested_quit;
         vector< unique_ptr<GameObject> > m_objects_array;
 
