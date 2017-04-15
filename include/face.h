@@ -11,6 +11,7 @@ class Face : public GameObject {
 
     public:
         Face(int x, int y);
+        ~Face();
 
         void damage(int damage);
         void update(float dt);
