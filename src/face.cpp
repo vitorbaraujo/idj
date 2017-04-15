@@ -1,6 +1,6 @@
 #include "face.h"
 
-Face::Face(int x, int y) : m_hitpoints(30), m_sp(Sprite("res/img/penguinface.png")) {
+Face::Face(int x, int y) : m_hitpoints(30), m_sp(Sprite("img/penguinface.png")) {
     m_box = Rectangle(x, y, m_sp.get_width(), m_sp.get_height());
 }
 

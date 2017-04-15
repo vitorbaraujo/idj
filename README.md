@@ -1,10 +1,6 @@
-# Trabalho 2
+# Trabalho 3
 
 ## Observações
-
-* Este projeto foi realizado no sistema operacional Linux. Portanto, é provável que as bibliotecas importadas não sejam encontradas no Windows.
-
-* A pasta de recursos deve se encontrar na raíz do projeto, com o nome 'res'
 
 * Quaisquer dúvidas, acesse o repositório do jogo, em: https://github.com/vitorbaraujo/idj
 
@@ -19,8 +15,6 @@
 * __Compile os arquivos do jogo__
 
 `make`
-
-* __Obs.: Não se esqueça de copiar a pasta de Recursos para a pasta raíz e renomeá-la para 'res'__
 
 * __Por fim, execute o jogo__
 
