@@ -19,7 +19,7 @@ void Face::update(float dt){
     int mouse_y = input_manager.get_mouse_y();
 
     for(int i = 0; i < 6; i++){
-        if(input_manager.is_mouse_down(i) && m_box.is_inside(mouse_x, mouse_y)){
+        if(input_manager.on_mouse_press(i) && m_box.is_inside(mouse_x, mouse_y)){
             damage(rand() % 10 + 10);
         }
     }

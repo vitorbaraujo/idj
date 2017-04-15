@@ -31,7 +31,7 @@ class State {
         ~State();
 
         bool quit_requested();
-        void update(float dt = 0);
+        void update(float dt);
         void render();
         void load_assets();
 };

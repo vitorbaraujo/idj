@@ -41,17 +41,17 @@ void State::update(float dt){
         m_requested_quit = true;
     }
 
-    if(input_manager.key_press(SPACE_KEY)){
+    if(input_manager.on_key_press(SPACE_KEY)){
         int mouse_x = input_manager.get_mouse_x();
         int mouse_y = input_manager.get_mouse_y();
 
         add_object(mouse_x, mouse_y);
     }
 
-    for(auto it = m_objects_array.begin(); it < m_objects_array.end(); ++it) {
+    for(auto it = m_objects_array.begin(); it < m_objects_array.end(); ++it){
         (*it)->update(dt);
 
-        if((*it)->is_dead()) {
+        if((*it)->is_dead()){
             m_objects_array.erase(it);
         }
     }

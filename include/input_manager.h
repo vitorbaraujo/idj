@@ -35,12 +35,12 @@ class InputManager {
 
         void update();
 
-        bool key_press(int key);
-        bool key_release(int key);
+        bool on_key_press(int key);
+        bool on_key_release(int key);
         bool is_key_down(int key);
 
-        bool mouse_press(int button);
-        bool mouse_release(int button);
+        bool on_mouse_press(int button);
+        bool on_mouse_release(int button);
         bool is_mouse_down(int button);
 
         int get_mouse_x();

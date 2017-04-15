@@ -56,11 +56,11 @@ void InputManager::update(){
     }
 }
 
-bool InputManager::key_press(int key){
+bool InputManager::on_key_press(int key){
     return m_key_update[key] == m_update_counter && is_key_down(key);
 }
 
-bool InputManager::key_release(int key){
+bool InputManager::on_key_release(int key){
     return m_key_update[key] == m_update_counter && !is_key_down(key);
 }
 
@@ -68,11 +68,11 @@ bool InputManager::is_key_down(int key){
     return m_key_state[key];   
 }
 
-bool InputManager::mouse_press(int button){
+bool InputManager::on_mouse_press(int button){
     return m_mouse_update[button] == m_update_counter && is_mouse_down(button);
 }
 
-bool InputManager::mouse_release(int button){
+bool InputManager::on_mouse_release(int button){
     return m_mouse_update[button] == m_update_counter && !is_mouse_down(button);
 }
 

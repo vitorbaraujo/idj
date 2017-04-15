@@ -48,19 +48,8 @@ Game::~Game(){
     SDL_Quit();
 }
 
-void Game::run(){
-    m_state->load_assets();
-
-    while(!m_state->quit_requested()){
-        InputManager::get_instance().update();
-        m_state->update();
-        m_state->render();
-
-        SDL_RenderPresent(m_renderer);
-        SDL_Delay(33);
-    }
-
-    Resources::clear_images();
+Game& Game::get_instance(){
+    return *m_instance;
 }
 
 SDL_Renderer* Game::get_renderer(){
@@ -71,6 +60,28 @@ State& Game::get_state(){
     return *m_state;
 }
 
-Game& Game::get_instance(){
-    return *m_instance;
+void Game::run(){
+    m_state->load_assets();
+
+    while(!m_state->quit_requested()){
+        calculate_delta_time();
+        InputManager::get_instance().update();
+        m_state->update(get_delta_time());
+        m_state->render();
+
+        SDL_RenderPresent(m_renderer);
+        SDL_Delay(33);
+    }
+
+    Resources::clear_images();
+}
+
+void Game::calculate_delta_time(){
+    unsigned int current_time = SDL_GetTicks() * 1000;
+    dt = (double)(m_frame_start - current_time);
+    m_frame_start = current_time;
+}
+
+double Game::get_delta_time(){
+
 }
