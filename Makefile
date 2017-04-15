@@ -1,5 +1,4 @@
-NAME = game
-
+NAME = Game
 SRC_DIR = src
 INC_DIR = include
 OBJ_DIR = obj
@@ -13,18 +12,48 @@ CFLAGS = -pedantic -std=c++11 -MMD -g3 -g -fPIC\
 		 -Wdisabled-optimization -Wformat=2 -Wlogical-op -Wmissing-declarations\
 		 -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls\
 		 -Wsign-promo -Wstrict-null-sentinel -Wswitch-default -Wundef\
-		 -Wzero-as-null-pointer-constant -Wuseless-cast -Wnon-virtual-dtor -std=c++1z
+		 -Wzero-as-null-pointer-constant -Wuseless-cast -Wnon-virtual-dtor
 INCLUDES = -Iinclude `sdl2-config --cflags`
-LIBS =  `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ldl
+LIBS = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ldl
 
 SRC = ${wildcard $(SRC_DIR)/*.cpp}
 OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.cpp=.o}}}
 
+RMDIR = rm -rf
+
+#--------------------------------------------------------------
+ifeq ($(OS), Windows_NT)
+
+SDL_PATH = C:\SDL-2.0.5
+
+INCLUDES = -Iinclude/ -I$(SDL_PATH)\include
+
+LIBS = -L $(SDL_PATH)\lib -lSDL2main\
+	   -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
+
+NAME := $(NAME).exe
+#--------------------------------------------------------------
+else
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
+
+LIBS = -lm -framework SDL2 -framework SDL2_image -framework SDL2_mixer\
+	   -framework SDL_TTF
+
+#-------------------------------------------------------------
+
+endif
+endif
+
 .PHONY: clean depend dist-clean dist
 
 all:
+#-------------------------------------------------------------
 	@mkdir -p $(OBJ_DIR) $(BIN_DIR)
 	$(MAKE) $(TARGET)
+#-------------------------------------------------------------
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo Building $@
@@ -49,10 +78,11 @@ crun:
 
 clean:
 	@echo Cleaning...
-	@find . -name *.o -exec rm {} \;
-	@find . -name *.d -exec rm {} \;
-	@rm -rf *~ *.o prog out.txt
+	@$(RMDIR) *~ *.o
 
 dist-clean: clean
-	@rm -f $(TARGET)/$(NAME)
-	@rm -rf *.tar.gz $(OBJ_DIR) $(BIN_DIR)
+	@$(RMDIR) $(TARGET)/$(NAME)
+	@$(RMDIR) *.tar.gz $(OBJ_DIR) $(BIN_DIR)
+
+print-%:
+	@echo $* = $($*)

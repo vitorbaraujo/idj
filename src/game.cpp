@@ -1,4 +1,5 @@
 #include "game.h"
+#include "resources.h"
 
 Game* Game::m_instance = nullptr;
 
@@ -56,6 +57,8 @@ void Game::run(){
         SDL_RenderPresent(m_renderer);
         SDL_Delay(33);
     }
+
+    Resources::clear_images();
 }
 
 SDL_Renderer* Game::get_renderer(){
