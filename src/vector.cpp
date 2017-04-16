@@ -14,6 +14,14 @@ int Vector::get_y() {
     return m_y;
 }
 
+void Vector::set_x(int x){
+    m_x = x;
+}
+
+void Vector::set_y(int y){
+    m_y = y;
+}
+
 double Vector::length() {
     return hypot(m_x, m_y);
 }

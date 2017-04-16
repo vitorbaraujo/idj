@@ -12,6 +12,8 @@ class Vector {
 
         int get_x();
         int get_y();
+        void set_x(int x);
+        void set_y(int y);
         double length();
         void scale(int sx, int sy);
         void translate(int dx, int dy);
