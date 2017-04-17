@@ -26,7 +26,7 @@ void State::add_object(double mouse_x, double mouse_y) {
     new_point.translate(200, 0);
     new_point.rotate(angle, Vector(mouse_x, mouse_y));
 
-    Face* face = new Face(new_point.get_x(), new_point.get_y());
+    Face* face = new Face(new_point.get_x() - Camera::m_pos.get_x(), new_point.get_y() - Camera::m_pos.get_y());
 
     m_objects_array.emplace_back(face);
 }

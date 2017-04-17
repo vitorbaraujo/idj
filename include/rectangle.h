@@ -13,6 +13,8 @@ class Rectangle {
         double get_y();
         double get_w();
         double get_h();
+        void set_x(double x);
+        void set_y(double y);
         bool is_inside(double mouse_x, double mouse_y);
 };
 

@@ -23,6 +23,14 @@ double Rectangle::get_h(){
     return m_h;
 }
 
+void Rectangle::set_x(double x){
+    m_x = x;
+}
+
+void Rectangle::set_y(double y){
+    m_y = y;
+}
+
 bool Rectangle::is_inside(double mouse_x, double mouse_y) {
     bool between_width = (mouse_x >= m_x && mouse_x <= (m_x + m_w));
     bool between_height = (mouse_y >= m_y && mouse_y <= (m_y + m_h));
