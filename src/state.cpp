@@ -62,11 +62,13 @@ void State::update(double dt){
 
 void State::render(){
     m_bg->render(0, 0);
-    m_tile_map->render(Camera::m_pos);
+    m_tile_map->render_layer(0, Camera::m_pos);
 
     for(auto& object : m_objects_array) {
         object->render();
     }
+
+    m_tile_map->render_layer(1, Camera::m_pos);
 }
 
 void State::load_assets(){
