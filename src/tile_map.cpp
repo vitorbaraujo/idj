@@ -55,20 +55,20 @@ int& TileMap::at(int x, int y, int z){
     return m_tile_matrix[index];
 }
 
-void TileMap::render(int camera_x, int camera_y){
+void TileMap::render(Vector *cameras){
     for(int layer = 0; layer < m_map_depth; ++layer) {
-        render_layer(layer, camera_x, camera_y); // fix camera_x and camera_y
+        render_layer(layer, cameras);
     }
 }
 
-void TileMap::render_layer(int layer, int camera_x, int camera_y){
+void TileMap::render_layer(int layer, Vector *cameras){
     for(int x = 0; x < m_map_width; ++x){
         for(int y = 0; y < m_map_height; ++y){
             int index = at(x, y, layer);
             int rx = x * m_tile_set->get_tile_width();
             int ry = y * m_tile_set->get_tile_height();
 
-            m_tile_set->render(index, rx + camera_x, ry + camera_y);
+            m_tile_set->render(index, rx + cameras[layer].get_x(), ry + cameras[layer].get_y());
         }
     }
 }

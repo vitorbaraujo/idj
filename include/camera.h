@@ -13,7 +13,7 @@ class Camera {
         static GameObject *m_focus;
 
     public:
-        static Vector m_pos, m_speed; 
+        static Vector m_pos[3], m_speed[3];
 
         static void follow(GameObject *new_focus);
         static void unfollow();

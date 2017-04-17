@@ -21,8 +21,8 @@ void Face::update(double dt){
 
     Rectangle shifted_box = m_box;
 
-    shifted_box.set_x(shifted_box.get_x() + Camera::m_pos.get_x());
-    shifted_box.set_y(shifted_box.get_y() + Camera::m_pos.get_y());
+    shifted_box.set_x(shifted_box.get_x() + Camera::m_pos[0].get_x());
+    shifted_box.set_y(shifted_box.get_y() + Camera::m_pos[0].get_y());
 
     for(int i = 0; i < 6; i++){
         if(input_manager.on_mouse_press(i) && shifted_box.is_inside(mouse_x, mouse_y)){
@@ -32,7 +32,7 @@ void Face::update(double dt){
 }
 
 void Face::render(){
-    m_sp.render(m_box.get_x() + Camera::m_pos.get_x(), m_box.get_y() + Camera::m_pos.get_y());
+    m_sp.render(m_box.get_x() + Camera::m_pos[0].get_x(), m_box.get_y() + Camera::m_pos[0].get_y());
 }
 
 bool Face::is_dead(){

@@ -26,7 +26,7 @@ void State::add_object(double mouse_x, double mouse_y) {
     new_point.translate(200, 0);
     new_point.rotate(angle, Vector(mouse_x, mouse_y));
 
-    Face* face = new Face(new_point.get_x() - Camera::m_pos.get_x(), new_point.get_y() - Camera::m_pos.get_y());
+    Face* face = new Face(new_point.get_x() - Camera::m_pos[0].get_x(), new_point.get_y() - Camera::m_pos[0].get_y());
 
     m_objects_array.emplace_back(face);
 }
@@ -62,7 +62,7 @@ void State::update(double dt){
 
 void State::render(){
     m_bg->render(0, 0);
-    m_tile_map->render((int)Camera::m_pos.get_x(), (int)Camera::m_pos.get_y());
+    m_tile_map->render(Camera::m_pos);
 
     for(auto& object : m_objects_array) {
         object->render();

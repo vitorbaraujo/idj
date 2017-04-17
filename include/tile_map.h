@@ -2,6 +2,7 @@
 #define TILE_MAP_H
 
 #include "tile_set.h"
+#include "vector.h"
 
 #include <vector>
 #include <fstream>
@@ -24,8 +25,8 @@ class TileMap {
         void load(string file);
         void set_tile_set(TileSet* tile_set);
         int& at(int x, int y, int z = 0);
-        void render(int camera_x = 0, int camera_y = 0);
-        void render_layer(int layer, int camera_x = 0, int camera_y = 0);
+        void render(Vector *cameras);
+        void render_layer(int layer, Vector *cameras);
 
         int get_width();
         int get_height();
