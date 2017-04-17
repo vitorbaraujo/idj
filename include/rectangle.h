@@ -3,17 +3,19 @@
 
 class Rectangle {
     private:
-        int m_x, m_y;
-        int m_w, m_h;
+        double m_x, m_y;
+        double m_w, m_h;
 
     public:
-        Rectangle(int x = 0, int y = 0, int w = 0, int h = 0);
+        Rectangle(double x = 0, double y = 0, double w = 0, double h = 0);
 
-        int get_x();
-        int get_y();
-        int get_w();
-        int get_h();
-        bool is_inside(int mouse_x, int mouse_y);
+        double get_x();
+        double get_y();
+        double get_w();
+        double get_h();
+        void set_x(double x);
+        void set_y(double y);
+        bool is_inside(double mouse_x, double mouse_y);
 };
 
 #endif

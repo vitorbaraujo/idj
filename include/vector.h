@@ -5,16 +5,20 @@
 
 class Vector {
     private:
-        int m_x, m_y;
+        double m_x, m_y;
 
     public:
-        Vector(int x = 0, int y = 0);
+        Vector(double x = 0, double y = 0);
 
-        int get_x();
-        int get_y();
+        double get_x();
+        double get_y();
+        void increment_x(double x);
+        void increment_y(double y);
+        void set_x(double x);
+        void set_y(double y);
         double length();
-        void scale(int sx, int sy);
-        void translate(int dx, int dy);
+        void scale(double sx, double sy);
+        void translate(double dx, double dy);
         void rotate(double angle);
         void rotate(double angle, Vector c);
 };

@@ -24,15 +24,14 @@ class State {
         bool m_requested_quit;
         vector< unique_ptr<GameObject> > m_objects_array;
 
-        void input();
-        void add_object(int mouse_x, int mouse_y);
+        void add_object(double mouse_x, double mouse_y);
 
     public:
         State();
         ~State();
 
         bool quit_requested();
-        void update(float dt = 0);
+        void update(double dt);
         void render();
         void load_assets();
 };

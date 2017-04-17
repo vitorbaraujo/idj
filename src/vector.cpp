@@ -2,35 +2,51 @@
 
 #include <cmath>
 
-Vector::Vector(int x, int y) : m_x(x), m_y(y) {
+Vector::Vector(double x, double y) : m_x(x), m_y(y) {
 
 }
 
-int Vector::get_x() {
+double Vector::get_x() {
     return m_x;
 }
 
-int Vector::get_y() {
+double Vector::get_y() {
     return m_y;
+}
+
+void Vector::increment_x(double x){
+    m_x += x;
+}
+
+void Vector::increment_y(double y){
+    m_y += y;
+}
+
+void Vector::set_x(double x){
+    m_x = x;
+}
+
+void Vector::set_y(double y){
+    m_y = y;
 }
 
 double Vector::length() {
     return hypot(m_x, m_y);
 }
 
-void Vector::scale(int sx, int sy) {
+void Vector::scale(double sx, double sy) {
     m_x *= sx;
     m_y *= sy;
 }
 
-void Vector::translate(int dx, int dy) {
+void Vector::translate(double dx, double dy) {
     m_x += dx;
     m_y += dy;
 }
 
 void Vector::rotate(double angle) {
-    int new_x = m_x * cos(angle) - m_y * sin(angle);
-    int new_y = m_x * sin(angle) + m_y * cos(angle);
+    double new_x = m_x * cos(angle) - m_y * sin(angle);
+    double new_y = m_x * sin(angle) + m_y * cos(angle);
 
     m_x = new_x;
     m_y = new_y;
