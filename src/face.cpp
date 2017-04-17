@@ -1,7 +1,7 @@
 #include "face.h"
 #include "input_manager.h"
 
-Face::Face(int x, int y) : m_hitpoints(30), m_sp(Sprite("img/penguinface.png")) {
+Face::Face(double x, double y) : m_hitpoints(30), m_sp(Sprite("img/penguinface.png")) {
     m_box = Rectangle(x, y, m_sp.get_width(), m_sp.get_height());
 }
 
@@ -13,7 +13,7 @@ void Face::damage(int damage){
     m_hitpoints -= damage;
 }
 
-void Face::update(float dt){
+void Face::update(double dt){
     InputManager input_manager = InputManager::get_instance();
     int mouse_x = input_manager.get_mouse_x();
     int mouse_y = input_manager.get_mouse_y();

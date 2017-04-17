@@ -10,11 +10,11 @@ class Face : public GameObject {
         Sprite m_sp;
 
     public:
-        Face(int x, int y);
+        Face(double x, double y);
         ~Face();
 
         void damage(int damage);
-        void update(float dt);
+        void update(double dt);
         void render();
         bool is_dead();
 };

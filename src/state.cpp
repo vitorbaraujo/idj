@@ -3,6 +3,7 @@
 #include "face.h"
 #include "vector.h"
 #include "input_manager.h"
+#include "camera.h"
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
@@ -16,7 +17,7 @@ State::~State() {
     m_objects_array.clear();
 }
 
-void State::add_object(int mouse_x, int mouse_y) {
+void State::add_object(double mouse_x, double mouse_y) {
     int random_angle = rand() % 360;
     double angle = (random_angle) * acos(-1) / 180.0;
 
@@ -34,8 +35,10 @@ bool State::quit_requested(){
     return m_requested_quit; 
 }
 
-void State::update(float dt){
+void State::update(double dt){
     InputManager input_manager = InputManager::get_instance();
+
+    Camera::update(dt);
 
     if(input_manager.is_key_down(ESCAPE_KEY) || input_manager.quit_requested()){
         m_requested_quit = true;
@@ -59,7 +62,7 @@ void State::update(float dt){
 
 void State::render(){
     m_bg->render(0, 0);
-    m_tile_map->render(0, 0);
+    m_tile_map->render((int)Camera::m_pos.get_x(), (int)Camera::m_pos.get_y());
 
     for(auto& object : m_objects_array) {
         object->render();

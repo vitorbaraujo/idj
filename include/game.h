@@ -17,7 +17,7 @@ class Game {
         SDL_Renderer* m_renderer;
         State* m_state;
         int m_frame_start;
-        double dt;
+        double m_dt;
 
         void calculate_delta_time();
 

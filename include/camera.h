@@ -6,6 +6,7 @@
 
 #include "vector.h"
 #include "game_object.h"
+#include "input_manager.h"
 
 class Camera {
     private:

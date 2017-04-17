@@ -5,6 +5,9 @@
 Game* Game::m_instance = nullptr;
 
 Game::Game(string title, int width, int height){
+    m_dt = 0;
+    m_frame_start = 0;
+
     if(m_instance == nullptr){
         m_instance = this; 
     }
@@ -77,11 +80,11 @@ void Game::run(){
 }
 
 void Game::calculate_delta_time(){
-    unsigned int current_time = SDL_GetTicks() * 1000;
-    dt = (double)(m_frame_start - current_time);
+    unsigned int current_time = SDL_GetTicks();
+    m_dt = (current_time - m_frame_start) / 1000.0;
     m_frame_start = current_time;
 }
 
 double Game::get_delta_time(){
-
+    return m_dt;
 }

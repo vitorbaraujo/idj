@@ -57,7 +57,7 @@ int& TileMap::at(int x, int y, int z){
 
 void TileMap::render(int camera_x, int camera_y){
     for(int layer = 0; layer < m_map_depth; ++layer) {
-        render_layer(layer); // fix camera_x and camera_y
+        render_layer(layer, camera_x, camera_y); // fix camera_x and camera_y
     }
 }
 
@@ -68,7 +68,7 @@ void TileMap::render_layer(int layer, int camera_x, int camera_y){
             int rx = x * m_tile_set->get_tile_width();
             int ry = y * m_tile_set->get_tile_height();
 
-            m_tile_set->render(index, rx, ry);
+            m_tile_set->render(index, rx + camera_x, ry + camera_y);
         }
     }
 }
