@@ -4,11 +4,15 @@
 #include "vector.h"
 #include "input_manager.h"
 #include "camera.h"
+#include "alien.h"
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
     m_tile_set = new TileSet(64, 64, "img/tileset.png");
     m_tile_map = new TileMap("map/tileMap.txt", m_tile_set);
+
+    Alien* alien = new Alien(512, 300, 0);
+    m_objects_array.emplace_back(alien);
 }
 
 State::~State() {

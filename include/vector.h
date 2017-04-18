@@ -17,6 +17,7 @@ class Vector {
         void set_x(double x);
         void set_y(double y);
         double length();
+        double distance(Vector v);
         void scale(double sx, double sy);
         void translate(double dx, double dy);
         void rotate(double angle);

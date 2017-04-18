@@ -11,11 +11,11 @@ void Minion::update(double dt){
 }
 
 void Minion::render(){
-
+    //m_sp.render();
 }
 
 bool Minion::is_dead(){
-
+    return false;
 }
 
 void Minion::shoot(Vector pos){

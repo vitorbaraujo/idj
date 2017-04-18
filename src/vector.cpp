@@ -34,6 +34,10 @@ double Vector::length() {
     return hypot(m_x, m_y);
 }
 
+double Vector::distance(Vector v){
+    return hypot(m_x - v.get_x(), m_y - v.get_y());
+}
+
 void Vector::scale(double sx, double sy) {
     m_x *= sx;
     m_y *= sy;
