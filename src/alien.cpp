@@ -11,12 +11,21 @@ Alien::Alien(double x, double y, int n_minions){
     m_active_action = false;
     // initialize m_class
     // populate m_minion_array
+
+    for(int i = 0;i < n_minions; i++){
+        int arc = i * (360 / n_minions);
+        m_minion_array.push_back(Minion(this, arc));
+    }
 }
 
 Alien::~Alien(){
 }
 
 void Alien::update(double dt){
+    for(auto &minion : m_minion_array){
+        minion.update(dt);
+    }
+
     InputManager input_manager = InputManager::get_instance();
 
     double mouse_x = input_manager.get_mouse_x();
@@ -80,9 +89,6 @@ void Alien::render(){
     m_sp.render(m_box.get_x() + camera_x, m_box.get_y() + camera_y);
 
     for(auto minion : m_minion_array){
-        int minion_x = minion.m_box.get_x() + camera_x;
-        int minion_y = minion.m_box.get_y() + camera_y;
-
         minion.render();
     }
 }
