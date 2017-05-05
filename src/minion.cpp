@@ -19,6 +19,11 @@ Minion::Minion(GameObject *minion_center, double arc_offset, double rotation){
     alien_center.increment_y(m_center->m_box.get_h() / 2);
 
     m_box = Rectangle(alien_center.get_x(), alien_center.get_y(), m_sp.get_width(), m_sp.get_height());
+
+    // set scale between 1.0 and 1.5
+    double random_scale = 1.0 + float(rand()) / float(RAND_MAX/(0.5));
+    m_sp.set_scale_x(random_scale);
+    m_sp.set_scale_y(random_scale);
 }
 
 void Minion::update(double dt){

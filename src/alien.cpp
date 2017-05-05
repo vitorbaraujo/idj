@@ -3,7 +3,8 @@
 #include "input_manager.h"
 #include "camera.h"
 
-#define SPEED_FACTOR 200
+#define SPEED_FACTOR 150
+#define ROTATE_FACTOR 0.5
 
 Alien::Alien(double x, double y, int n_minions, double rotation){
     m_rotation = rotation;
@@ -28,6 +29,9 @@ void Alien::update(double dt){
         minion.update(dt);
     }
 
+    m_rotation -= ROTATE_FACTOR;
+    if(m_rotation < 0) m_rotation += 360;
+
     InputManager input_manager = InputManager::get_instance();
 
     double mouse_x = input_manager.get_mouse_x();
@@ -50,7 +54,7 @@ void Alien::update(double dt){
         Vector initial_position(m_box.get_x() + m_box.get_w() / 2, m_box.get_y() + m_box.get_h() / 2);
         Vector final_position(mouse_x - camera_x, mouse_y - camera_y);
 
-        Action action = Action(Action::ActionType::MOVE, initial_position, final_position, Camera::m_pos[0]);
+        Action action = Action(Action::ActionType::MOVE, initial_position, final_position);
         m_task_queue.push(action);
     }
 
@@ -60,15 +64,13 @@ void Alien::update(double dt){
         m_active_action = true;
 
         if(m_action.m_type == Action::ActionType::MOVE){
-            if(same_position(m_action.m_final_pos, m_action.m_current_camera)){
+            if(same_position(m_action.m_final_pos)){
                 m_task_queue.pop();
                 m_speed = Vector(0,0);
                 m_active_action = false;
             }
             else{
-                if(speed_not_set(m_action)){
-                    set_speed(m_action, dt);
-                }
+                set_speed(m_action, dt);
             }
         }
 
@@ -101,16 +103,16 @@ bool Alien::is_dead(){
     return m_hp <= 0;
 }
 
-bool Alien::same_position(Vector v, Vector current_camera){
+bool Alien::same_position(Vector other){
     double EPS = 5;
-    double diff_x = abs(m_box.get_x() + m_box.get_w() / 2 + current_camera.get_x() - v.get_x());
-    double diff_y = abs(m_box.get_y() + m_box.get_h() / 2 + current_camera.get_y() - v.get_y());
+    double diff_x = abs(m_box.get_x() + m_box.get_w() / 2 - other.get_x());
+    double diff_y = abs(m_box.get_y() + m_box.get_h() / 2 - other.get_y());
 
     return diff_x < EPS && diff_y < EPS;
 }
 
 bool Alien::speed_not_set(Action action){
-    bool same_pos = same_position(action.m_final_pos, action.m_current_camera);
+    bool same_pos = same_position(action.m_final_pos);
     return not same_pos && m_speed.get_x() == 0 && m_speed.get_y() == 0;
 }
 
