@@ -1,7 +1,12 @@
+#include "input_manager.h"
 #include "minion.h"
 #include "camera.h"
+#include "bullet.h"
+#include "state.h"
+#include "game.h"
 
 #define OFFSET 200
+#define SPEED_FACTOR 100
 
 Minion::Minion(GameObject *minion_center, double arc_offset){
     m_arc = arc_offset;
@@ -16,7 +21,7 @@ Minion::Minion(GameObject *minion_center, double arc_offset){
 }
 
 void Minion::update(double dt){
-    m_arc += 1.0;
+    m_arc += SPEED_FACTOR * dt;
     if(m_arc > 360) m_arc = 0;
     double angle = m_arc * acos(-1) / 180.0;
 
@@ -38,5 +43,17 @@ bool Minion::is_dead(){
 }
 
 void Minion::shoot(Vector pos){
+    InputManager input_manager = InputManager::get_instance();
 
+    double mouse_x = input_manager.get_mouse_x();
+    double mouse_y = input_manager.get_mouse_y();
+
+    double angle = atan2(m_box.get_y() - pos.get_y(), m_box.get_x() - pos.get_x());
+    double speed = 20;
+    double max_distance = 4000;
+
+    Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet1.png");
+
+    State *state = Game::get_instance().get_state();
+    state->add_object(bullet);
 }

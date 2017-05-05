@@ -30,6 +30,12 @@ class Alien : public GameObject {
                 Vector m_current_camera;
                 
                 Action(){}
+
+                Action(ActionType type, double x, double y) {
+                    m_initial_pos = Vector(x, y);
+                    m_type = type;
+                }
+
                 Action(ActionType type, Vector initial_pos, Vector final_pos, Vector camera){
                     m_type = type;
                     m_initial_pos = initial_pos;

@@ -34,6 +34,7 @@ class State {
         void update(double dt);
         void render();
         void load_assets();
+        void add_object(GameObject *ptr);
 };
 
 #endif

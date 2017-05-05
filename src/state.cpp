@@ -55,11 +55,12 @@ void State::update(double dt){
         add_object(mouse_x, mouse_y);
     }
 
-    for(auto it = m_objects_array.begin(); it < m_objects_array.end(); ++it){
-        (*it)->update(dt);
+    for(int it = 0; it < m_objects_array.size(); ++it){
+        m_objects_array[it]->update(dt);
 
-        if((*it)->is_dead()){
-            m_objects_array.erase(it);
+        if(m_objects_array[it]->is_dead()){
+            m_objects_array.erase(m_objects_array.begin() + it);
+            break;
         }
     }
 }
@@ -77,4 +78,8 @@ void State::render(){
 
 void State::load_assets(){
     m_bg->open("img/ocean.jpg");
+}
+
+void State::add_object(GameObject *ptr) {
+    m_objects_array.emplace_back(ptr);
 }
