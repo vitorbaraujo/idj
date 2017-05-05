@@ -6,6 +6,10 @@ Vector::Vector(double x, double y) : m_x(x), m_y(y) {
 
 }
 
+Vector::Vector(Rectangle r) : m_x(r.get_x()), m_y(r.get_y()) {
+
+}
+
 double Vector::get_x() {
     return m_x;
 }

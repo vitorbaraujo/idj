@@ -25,16 +25,24 @@ class Alien : public GameObject {
                 enum ActionType { MOVE, SHOOT };
 
                 ActionType m_type;
-                Vector m_pos;
+                Vector m_initial_pos, m_final_pos;
+                Vector m_distance;
+                Vector m_current_camera;
                 
                 Action(){}
-                Action(ActionType type, double x, double y){
+                Action(ActionType type, Vector initial_pos, Vector final_pos, Vector camera){
                     m_type = type;
-                    m_pos = Vector(x, y);
+                    m_initial_pos = initial_pos;
+                    m_final_pos = final_pos;
+                    m_current_camera = camera;
+
+                    m_distance.set_x(initial_pos.get_x() - final_pos.get_x());
+                    m_distance.set_y(initial_pos.get_y() - final_pos.get_y());
                 }
         };
 
-        Action m_class;
+        Action m_action;
+        bool m_active_action;
         queue<Action> m_task_queue;
 
     public:
@@ -44,6 +52,9 @@ class Alien : public GameObject {
         void update(double dt);
         void render();
         bool is_dead();
+        bool same_position(Vector v, Vector current_camera);
+        bool speed_not_set(Action action);
+        void set_speed(Action action, double delta_time);
 };
 
 #endif

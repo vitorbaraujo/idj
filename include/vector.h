@@ -1,6 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include "rectangle.h"
+
 #include <cmath>
 
 class Vector {
@@ -9,6 +11,7 @@ class Vector {
 
     public:
         Vector(double x = 0, double y = 0);
+        Vector(Rectangle r);
 
         double get_x();
         double get_y();
