@@ -45,12 +45,9 @@ bool Minion::is_dead(){
 void Minion::shoot(Vector pos){
     InputManager input_manager = InputManager::get_instance();
 
-    double mouse_x = input_manager.get_mouse_x();
-    double mouse_y = input_manager.get_mouse_y();
-
     double angle = atan2(m_box.get_y() - pos.get_y(), m_box.get_x() - pos.get_x());
-    double speed = 20;
-    double max_distance = 4000;
+    double speed = 100;
+    double max_distance = 8000;
 
     Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet1.png");
 

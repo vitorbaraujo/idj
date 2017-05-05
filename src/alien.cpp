@@ -35,7 +35,7 @@ void Alien::update(double dt){
 
     // queueing actions
     if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON)){
-        Action action = Action(Action::ActionType::SHOOT, mouse_x, mouse_y);
+        Action action = Action(Action::ActionType::SHOOT, mouse_x - camera_x, mouse_y - camera_y);
         m_task_queue.push(action);
     }
     else if(input_manager.on_mouse_press(RIGHT_MOUSE_BUTTON)){
@@ -45,8 +45,8 @@ void Alien::update(double dt){
             m_speed = Vector(0,0);
         }
 
-        Vector initial_position(m_box.get_x() + m_box.get_w() / 2 + camera_x, m_box.get_y() + m_box.get_h() / 2 + camera_y);
-        Vector final_position(mouse_x, mouse_y);
+        Vector initial_position(m_box.get_x() + m_box.get_w() / 2, m_box.get_y() + m_box.get_h() / 2);
+        Vector final_position(mouse_x - camera_x, mouse_y - camera_y);
 
         Action action = Action(Action::ActionType::MOVE, initial_position, final_position, Camera::m_pos[0]);
         m_task_queue.push(action);
