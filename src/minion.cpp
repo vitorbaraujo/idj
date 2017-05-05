@@ -8,7 +8,8 @@
 #define OFFSET 200
 #define SPEED_FACTOR 100
 
-Minion::Minion(GameObject *minion_center, double arc_offset){
+Minion::Minion(GameObject *minion_center, double arc_offset, double rotation){
+    m_rotation = rotation;
     m_arc = arc_offset;
     m_center = minion_center;
     m_sp = Sprite("img/minion.png");
@@ -25,6 +26,8 @@ void Minion::update(double dt){
     if(m_arc > 360) m_arc = 0;
     double angle = m_arc * acos(-1) / 180.0;
 
+    m_rotation = m_arc;
+
     Vector center(m_center->m_box.get_x() + m_center->m_box.get_w() / 2, m_center->m_box.get_y() + m_center->m_box.get_h() / 2);
     Vector pos(center);
     pos.translate(OFFSET, 0);
@@ -35,7 +38,7 @@ void Minion::update(double dt){
 }
 
 void Minion::render(){
-    m_sp.render(m_box.get_x() + Camera::m_pos[0].get_x(), m_box.get_y() + Camera::m_pos[0].get_y());
+    m_sp.render(m_box.get_x() + Camera::m_pos[0].get_x(), m_box.get_y() + Camera::m_pos[0].get_y(), m_rotation);
 }
 
 bool Minion::is_dead(){

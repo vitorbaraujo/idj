@@ -52,7 +52,7 @@ class Alien : public GameObject {
         queue<Action> m_task_queue;
 
     public:
-        Alien(double x, double y, int n_minions);
+        Alien(double x, double y, int n_minions, double rotation = 0);
         ~Alien();
 
         void update(double dt);

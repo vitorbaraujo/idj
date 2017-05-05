@@ -4,14 +4,15 @@
 #include "rectangle.h"
 
 class GameObject {
-	public:
-		virtual ~GameObject() {}
+    public:
+        virtual ~GameObject() {}
 
-		virtual void update(double dt) = 0;
-		virtual void render() = 0;
-		virtual bool is_dead() = 0;
+        virtual void update(double dt) = 0;
+        virtual void render() = 0;
+        virtual bool is_dead() = 0;
 
-		Rectangle m_box;
+        Rectangle m_box;
+        double m_rotation;
 };
 
 #endif

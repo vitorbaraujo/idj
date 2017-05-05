@@ -5,7 +5,9 @@
 
 #define SPEED_FACTOR 200
 
-Alien::Alien(double x, double y, int n_minions){
+Alien::Alien(double x, double y, int n_minions, double rotation){
+    m_rotation = rotation;
+
     m_sp = Sprite("img/alien.png");
     m_box = Rectangle(x, y, m_sp.get_width(), m_sp.get_height());
     m_hp = 30; // fixme
@@ -14,7 +16,7 @@ Alien::Alien(double x, double y, int n_minions){
 
     for(int i = 0;i < n_minions; i++){
         double arc = i * (360.0 / n_minions);
-        m_minion_array.push_back(Minion(this, arc));
+        m_minion_array.push_back(Minion(this, arc, arc));
     }
 }
 
@@ -88,7 +90,7 @@ void Alien::render(){
     double camera_x = Camera::m_pos[0].get_x();
     double camera_y = Camera::m_pos[0].get_y();
 
-    m_sp.render(m_box.get_x() + camera_x, m_box.get_y() + camera_y);
+    m_sp.render(m_box.get_x() + camera_x, m_box.get_y() + camera_y, m_rotation);
 
     for(auto minion : m_minion_array){
         minion.render();
@@ -100,7 +102,7 @@ bool Alien::is_dead(){
 }
 
 bool Alien::same_position(Vector v, Vector current_camera){
-    double EPS = 4;
+    double EPS = 5;
     double diff_x = abs(m_box.get_x() + m_box.get_w() / 2 + current_camera.get_x() - v.get_x());
     double diff_y = abs(m_box.get_y() + m_box.get_h() / 2 + current_camera.get_y() - v.get_y());
 

@@ -12,7 +12,7 @@ class Minion : public GameObject {
         double m_arc;
 
     public:
-        Minion(GameObject *minion_center, double arc_offset = 0);
+        Minion(GameObject *minion_center, double arc_offset = 0, double rotation = 0);
 
         void update(double dt);
         void render();
