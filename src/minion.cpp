@@ -14,11 +14,7 @@ Minion::Minion(GameObject *minion_center, double arc_offset, double rotation){
     m_center = minion_center;
     m_sp = Sprite("img/minion.png");
 
-    Vector alien_center(Vector(minion_center->m_box));
-    alien_center.increment_x(m_center->m_box.get_w() / 2);
-    alien_center.increment_y(m_center->m_box.get_h() / 2);
-
-    m_box = Rectangle(alien_center.get_x(), alien_center.get_y(), m_sp.get_width(), m_sp.get_height());
+    m_box = Rectangle(minion_center->m_box.get_x(), minion_center->m_box.get_y(), m_sp.get_width(), m_sp.get_height());
 
     // set scale between 1.0 and 1.5
     double random_scale = 1.0 + float(rand()) / float(RAND_MAX/(0.5));
@@ -33,17 +29,16 @@ void Minion::update(double dt){
 
     m_rotation = m_arc;
 
-    Vector center(m_center->m_box.get_x() + m_center->m_box.get_w() / 2, m_center->m_box.get_y() + m_center->m_box.get_h() / 2);
-    Vector pos(center);
+    Vector pos(m_center->m_box);
     pos.translate(OFFSET, 0);
 
-    pos.rotate(angle, center);
+    pos.rotate(angle, m_center->m_box);
 
     m_box = Rectangle(pos.get_x(), pos.get_y(), m_sp.get_height(), m_sp.get_width());
 }
 
 void Minion::render(){
-    m_sp.render(m_box.get_x() + Camera::m_pos[0].get_x(), m_box.get_y() + Camera::m_pos[0].get_y(), m_rotation);
+    m_sp.render(m_box.draw_x() + Camera::m_pos[0].get_x(), m_box.draw_y() + Camera::m_pos[0].get_y(), m_rotation);
 }
 
 bool Minion::is_dead(){

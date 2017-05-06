@@ -25,24 +25,15 @@ class Alien : public GameObject {
                 enum ActionType { MOVE, SHOOT };
 
                 ActionType m_type;
-                Vector m_initial_pos, m_final_pos;
+                Vector m_pos;
                 
                 Action(){}
-
                 Action(ActionType type, double x, double y) {
-                    m_initial_pos = Vector(x, y);
+                    m_pos = Vector(x, y);
                     m_type = type;
-                }
-
-                Action(ActionType type, Vector initial_pos, Vector final_pos){
-                    m_type = type;
-                    m_initial_pos = initial_pos;
-                    m_final_pos = final_pos;
                 }
         };
 
-        Action m_action;
-        bool m_active_action;
         queue<Action> m_task_queue;
 
     public:
@@ -53,8 +44,7 @@ class Alien : public GameObject {
         void render();
         bool is_dead();
         bool same_position(Vector other);
-        bool speed_not_set(Action action);
-        void set_speed(Action action, double delta_time);
+        Vector set_speed(Vector pos, double dt);
 };
 
 #endif
