@@ -66,9 +66,19 @@ void Alien::update(double dt){
         }
 
         else if(action.m_type == Action::ActionType::SHOOT){
-            int idx_minion = rand() % m_minion_array.size();
-            Minion minion = m_minion_array[idx_minion];
+            double min_dist = 1e9;
+            int minion_idx = 0;
 
+            for(int i = 0; i < m_minion_array.size(); i++){
+                Minion minion = m_minion_array[i];
+                double dist = hypot(minion.m_box.get_x() - action.m_pos.get_x(), minion.m_box.get_y() - action.m_pos.get_y());
+                if(dist < min_dist){
+                    minion_idx = i;
+                    min_dist = dist;
+                }
+            }
+
+            Minion minion = m_minion_array[minion_idx];
             minion.shoot(action.m_pos);
 
             m_task_queue.pop();
