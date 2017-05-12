@@ -4,6 +4,7 @@
 #include "input_manager.h"
 #include "camera.h"
 #include "alien.h"
+#include "penguins.h"
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
@@ -12,6 +13,9 @@ State::State() : m_requested_quit(false) {
 
     Alien* alien = new Alien(512, 300, 6);
     m_objects_array.emplace_back(alien);
+
+    Penguins* penguins = new Penguins(704, 640);
+    m_objects_array.emplace_back(penguins);
 }
 
 State::~State() {
