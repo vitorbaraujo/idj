@@ -16,7 +16,7 @@ class Bullet : public GameObject {
         double m_distance_left;
 
     public:
-        Bullet(double x, double y, double angle, double speed, double max_distance, string sprite);
+        Bullet(double x, double y, double angle, double speed, double max_distance, string sprite, double frame_time, int frame_count);
         
         void update(double dt);
         void render();

@@ -13,10 +13,12 @@ class Sprite {
         int m_width, m_height;
         SDL_Rect* m_clip_rect;
         double m_scale_x, m_scale_y;
+        int m_frame_count, m_current_frame;
+        double m_time_elapsed, m_frame_time;
 
     public:
         Sprite();
-        Sprite(string filename);
+        Sprite(string filename, int frame_count =  1, double frame_time = 1);
         ~Sprite();
 
         void open(string filename);
@@ -27,6 +29,11 @@ class Sprite {
         bool is_open();
         void set_scale_x(double scale);
         void set_scale_y(double scale);
+        void update(double dt);
+        void set_frame(int frame);
+        void set_frame_count(int frame_count);
+        void set_frame_time(double frame_time);
+
 };
 
 #endif

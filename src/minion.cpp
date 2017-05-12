@@ -27,7 +27,7 @@ void Minion::update(double dt){
     if(m_arc > 360) m_arc = 0;
     double angle = m_arc * acos(-1) / 180.0;
 
-    m_rotation = m_arc;
+    m_rotation = m_arc + 90;
 
     Vector pos(m_center->m_box);
     pos.translate(OFFSET, 0);
@@ -48,11 +48,11 @@ bool Minion::is_dead(){
 void Minion::shoot(Vector pos){
     InputManager input_manager = InputManager::get_instance();
 
-    double angle = atan2(m_box.get_y() - pos.get_y(), m_box.get_x() - pos.get_x());
+    double angle = atan2(pos.get_y() - m_box.get_y(), pos.get_x() - m_box.get_x());
     double speed = 100;
-    double max_distance = 8000;
+    double max_distance = 20000;
 
-    Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet1.png");
+    Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet2.png", 1, 3);
 
     State *state = Game::get_instance().get_state();
     state->add_object(bullet);

@@ -33,7 +33,7 @@ void State::update(double dt){
         m_requested_quit = true;
     }
 
-    for(int it = 0; it < m_objects_array.size(); ++it){
+    for(unsigned int it = 0; it < m_objects_array.size(); ++it){
         m_objects_array[it]->update(dt);
 
         if(m_objects_array[it]->is_dead()){

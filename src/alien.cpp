@@ -69,7 +69,7 @@ void Alien::update(double dt){
             double min_dist = 1e9;
             int minion_idx = 0;
 
-            for(int i = 0; i < m_minion_array.size(); i++){
+            for(unsigned int i = 0; i < m_minion_array.size(); i++){
                 Minion minion = m_minion_array[i];
                 double dist = hypot(minion.m_box.get_x() - action.m_pos.get_x(), minion.m_box.get_y() - action.m_pos.get_y());
                 if(dist < min_dist){
@@ -85,8 +85,8 @@ void Alien::update(double dt){
         }
     }
 
-    m_box.set_x(m_box.get_x() - m_speed.get_x());
-    m_box.set_y(m_box.get_y() - m_speed.get_y());
+    m_box.set_x(m_box.get_x() + m_speed.get_x());
+    m_box.set_y(m_box.get_y() + m_speed.get_y());
 }
 
 void Alien::render(){
@@ -110,7 +110,7 @@ bool Alien::same_position(Vector other){
 }
 
 Vector Alien::set_speed(Vector pos, double dt){
-    double angle = atan2(m_box.get_y() - pos.get_y(), m_box.get_x() - pos.get_x());
+    double angle = atan2(pos.get_y() - m_box.get_y(), pos.get_x() - m_box.get_x());
 
     return Vector(SPEED_FACTOR * dt * cos(angle), SPEED_FACTOR * dt * sin(angle));
 }
