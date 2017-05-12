@@ -3,8 +3,6 @@
 #include <iostream>
 
 Rectangle::Rectangle(double x, double y, double w, double h) : m_x(x), m_y(y), m_w(w), m_h(h) {
-    m_x -= m_w / 2;
-    m_y -= m_h / 2;
 }
 
 double Rectangle::get_x(){
@@ -21,6 +19,14 @@ double Rectangle::get_w(){
 
 double Rectangle::get_h(){
     return m_h;
+}
+
+double Rectangle::draw_x(){
+    return m_x - m_w / 2;
+}
+
+double Rectangle::draw_y(){
+    return m_y - m_h / 2;
 }
 
 void Rectangle::set_x(double x){

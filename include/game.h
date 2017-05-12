@@ -27,7 +27,7 @@ class Game {
 
         static Game& get_instance();
         SDL_Renderer* get_renderer();
-        State& get_state();
+        State* get_state();
         void run();
         double get_delta_time();
 };

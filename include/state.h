@@ -24,8 +24,6 @@ class State {
         bool m_requested_quit;
         vector< unique_ptr<GameObject> > m_objects_array;
 
-        void add_object(double mouse_x, double mouse_y);
-
     public:
         State();
         ~State();
@@ -34,6 +32,7 @@ class State {
         void update(double dt);
         void render();
         void load_assets();
+        void add_object(GameObject *ptr);
 };
 
 #endif

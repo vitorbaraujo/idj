@@ -59,8 +59,8 @@ SDL_Renderer* Game::get_renderer(){
     return m_renderer;
 }
 
-State& Game::get_state(){
-    return *m_state;
+State* Game::get_state(){
+    return m_state;
 }
 
 void Game::run(){
