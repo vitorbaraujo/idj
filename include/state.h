@@ -14,6 +14,9 @@
 using std::vector;
 using std::unique_ptr;
 
+// FIXME
+#include "rectangle.h"
+
 class Sprite;
 
 class State {
@@ -33,6 +36,7 @@ class State {
         void render();
         void load_assets();
         void add_object(GameObject *ptr);
+        void print_box(Rectangle r);
 };
 
 #endif

@@ -43,3 +43,7 @@ bool Rectangle::is_inside(double mouse_x, double mouse_y) {
 
     return (between_width and between_height);
 }
+
+Rectangle Rectangle::get_center(){
+    return Rectangle(draw_x(), draw_y());
+}

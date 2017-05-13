@@ -28,6 +28,8 @@ class Penguins : public GameObject {
         void render();
         bool is_dead();
         void shoot();
+        void notify_collision(GameObject& other);
+        bool is(string type);
 
         Penguins* m_player;
 };

@@ -44,6 +44,8 @@ class Alien : public GameObject {
         void render();
         bool is_dead();
         bool same_position(Vector other);
+        void notify_collision(GameObject& other);
+        bool is(string type);
         Vector set_speed(Vector pos, double dt);
 };
 

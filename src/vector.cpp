@@ -14,11 +14,11 @@ Vector::Vector(const Vector &v) : m_x(v.m_x), m_y(v.m_y) {
 
 }
 
-double Vector::get_x() {
+double Vector::get_x() const {
     return m_x;
 }
 
-double Vector::get_y() {
+double Vector::get_y() const {
     return m_y;
 }
 
@@ -68,4 +68,16 @@ void Vector::rotate(double angle, Vector c) {
     translate(-c.get_x(), -c.get_y());
     rotate(angle);
     translate(c.get_x(), c.get_y());
+}
+
+Vector Vector::operator+(const Vector& rhs) const {
+   return Vector(m_x + rhs.m_x, m_y + rhs.m_y);
+}
+
+Vector Vector::operator-(const Vector& rhs) const {
+   return Vector(m_x - rhs.m_x, m_y - rhs.m_y);
+}
+
+Vector Vector::operator*(const double rhs) const {
+   return Vector(m_x * rhs, m_y * rhs);
 }

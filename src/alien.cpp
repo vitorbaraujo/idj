@@ -114,3 +114,11 @@ Vector Alien::set_speed(Vector pos, double dt){
 
     return Vector(SPEED_FACTOR * dt * cos(angle), SPEED_FACTOR * dt * sin(angle));
 }
+
+void Alien::notify_collision(GameObject& other){
+
+}
+
+bool Alien::is(string type){
+    return type == "alien";
+}

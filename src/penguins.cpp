@@ -53,7 +53,7 @@ void Penguins::update(double dt){
     m_cannon_angle = atan2(mouse_y - m_box.get_y(), mouse_x - m_box.get_x());
 
     if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON)){
-        shoot();
+        // shoot();
     }
 
     double rad_rotation = m_rotation * acos(-1) / 180.0;
@@ -100,4 +100,12 @@ void Penguins::shoot(){
 
     State *state = Game::get_instance().get_state();
     state->add_object(bullet);
+}
+
+void Penguins::notify_collision(GameObject& other){
+
+}
+
+bool Penguins::is(string type){
+    return type == "penguins";
 }

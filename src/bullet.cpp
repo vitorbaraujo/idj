@@ -27,3 +27,13 @@ void Bullet::render() {
 bool Bullet::is_dead() {
     return m_distance_left <= 0;
 }
+
+void Bullet::notify_collision(GameObject& other){
+    if(other.is("penguins")){
+        printf("BATI NUM PENGUIN\n");
+    }
+}
+
+bool Bullet::is(string type){
+    return type == "bullet";
+}

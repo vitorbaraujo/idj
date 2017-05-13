@@ -57,3 +57,11 @@ void Minion::shoot(Vector pos){
     State *state = Game::get_instance().get_state();
     state->add_object(bullet);
 }
+
+void Minion::notify_collision(GameObject& other){
+
+}
+
+bool Minion::is(string type){
+    return type == "minion";
+}
