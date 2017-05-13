@@ -1,6 +1,12 @@
 #include "collision.h"
 
+// FIXME
+// fix collision
+
 bool Collision::is_colliding(Rectangle& a, Rectangle& b, double a_angle, double b_angle){
+    a_angle *= (180 / acos(-1));
+    b_angle *= (180 / acos(-1));
+
     Vector A[] = {  Vector( a.get_x(), a.get_y() + a.get_h() ),
         Vector( a.get_x() + a.get_w(), a.get_y() + a.get_h() ),
         Vector( a.get_x() + a.get_w(), a.get_y() ),

@@ -29,8 +29,9 @@ bool Bullet::is_dead() {
 }
 
 void Bullet::notify_collision(GameObject& other){
-    if(other.is("penguins")){
-        printf("BATI NUM PENGUIN\n");
+    printf("NOTIFY BULLET\n");
+    if(other.is("penguins") || other.is("alien")){
+        m_distance_left = 0;
     }
 }
 

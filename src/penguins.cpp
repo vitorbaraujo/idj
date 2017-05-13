@@ -27,6 +27,9 @@ Penguins::~Penguins(){
 }
 
 void Penguins::update(double dt){
+    if(is_dead())
+        Camera::unfollow();
+
     InputManager input_manager = InputManager::get_instance();
     double mouse_x = input_manager.get_mouse_x() - Camera::m_pos[0].get_x();
     double mouse_y = input_manager.get_mouse_y() - Camera::m_pos[0].get_y();
@@ -103,7 +106,11 @@ void Penguins::shoot(){
 }
 
 void Penguins::notify_collision(GameObject& other){
-
+    printf("NOTIFY PENGUIN\n");
+    // FIX hp loss
+    if(other.is("bullet")){
+        m_hp -= 5;
+    }
 }
 
 bool Penguins::is(string type){

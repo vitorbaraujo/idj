@@ -36,7 +36,6 @@ class State {
         void render();
         void load_assets();
         void add_object(GameObject *ptr);
-        void print_box(Rectangle r);
 };
 
 #endif

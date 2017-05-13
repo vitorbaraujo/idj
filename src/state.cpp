@@ -51,28 +51,15 @@ void State::update(double dt){
 
     for(unsigned int it = 0; it < m_objects_array.size(); ++it){
         for(unsigned int it2 = it + 1; it2 < m_objects_array.size(); ++it2){
-
-            const string names[] { "penguins", "alien", "bullet", "minion" };
-
-            printf("it é ");
-            for(auto a : names){ if(m_objects_array[it]->is(a)){ printf("%s\n", a.c_str()); break; }}
-
-            printf("it2 é ");
-            for(auto a : names){ if(m_objects_array[it2]->is(a)){ printf("%s\n", a.c_str()); break; }}
-
-
             Rectangle it_box = m_objects_array[it]->m_box;
-            printf("IT BOX: ");
-            print_box(it_box);
-
             Rectangle it2_box = m_objects_array[it2]->m_box;
-            printf("IT2 BOX: ");
-            print_box(it2_box);
 
             double it_angle = m_objects_array[it]->m_rotation;
             double it2_angle = m_objects_array[it2]->m_rotation;
+
             if(Collision::is_colliding(it_box, it2_box, it_angle, it2_angle)){
                 m_objects_array[it]->notify_collision(*m_objects_array[it2]);
+                m_objects_array[it2]->notify_collision(*m_objects_array[it]);
             }
         }
     }
@@ -95,8 +82,4 @@ void State::load_assets(){
 
 void State::add_object(GameObject *ptr) {
     m_objects_array.emplace_back(ptr);
-}
-
-void State::print_box(Rectangle r){
-    printf("x: %f y: %f h: %f w: %f\n", r.get_x(), r.get_y(), r.get_h(), r.get_w());
 }

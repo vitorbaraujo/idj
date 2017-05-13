@@ -15,9 +15,6 @@ class Collision {
         static inline Vector rotate(const Vector& p, double angle);
 
     public:
-        // Observação: IsColliding espera ângulos em radianos!
-        // Para usar graus, forneça a sua própria implementação de rotate,
-        // ou transforme os ângulos no corpo de IsColliding.
         static bool is_colliding(Rectangle& a, Rectangle& b, double a_angle, double b_angle);
 };
 
