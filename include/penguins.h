@@ -1,9 +1,15 @@
 #ifndef PENGUINS_H
 #define PENGUINS_H
 
+#include <iostream>
+#include <cmath>
+
 #include "game_object.h"
 #include "sprite.h"
 #include "camera.h"
+
+using std::max;
+using std::min;
 
 class Penguins : public GameObject {
     private:

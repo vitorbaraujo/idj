@@ -16,6 +16,8 @@ State::State() : m_requested_quit(false) {
 
     Penguins* penguins = new Penguins(704, 640);
     m_objects_array.emplace_back(penguins);
+
+    Camera::follow(penguins);
 }
 
 State::~State() {

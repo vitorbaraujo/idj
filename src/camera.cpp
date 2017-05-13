@@ -19,30 +19,34 @@ void Camera::update(double dt){
     m_speed[1] = Vector(0, 0);
 
     if(m_focus){
-        m_pos[0] = Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-        m_pos[1] = Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-    }
+        double focus_x = m_focus->m_box.get_x();
+        double focus_y = m_focus->m_box.get_y();
 
-    if(input_manager.is_key_down(RIGHT_ARROW_KEY)){
-        m_speed[0].set_x(-1.0 / dt);
-        m_speed[1].set_x(-0.6 / dt);
+        m_pos[0] = Vector(-focus_x + SCREEN_WIDTH / 2, -focus_y + SCREEN_HEIGHT / 2);
+        m_pos[1] = Vector(-focus_x + SCREEN_WIDTH / 2, -focus_y + SCREEN_HEIGHT / 2);
     }
-    if(input_manager.is_key_down(LEFT_ARROW_KEY)){
-        m_speed[0].set_x(1.0 / dt);
-        m_speed[1].set_x(0.6 / dt);
-    }
-    if(input_manager.is_key_down(UP_ARROW_KEY)){
-        m_speed[0].set_y(1.0 / dt);
-        m_speed[1].set_y(0.6 / dt);
-    }
-    if(input_manager.is_key_down(DOWN_ARROW_KEY)){
-        m_speed[0].set_y(-1.0 / dt);
-        m_speed[1].set_y(-0.6 / dt);
-    }
+    else{
+        if(input_manager.is_key_down(RIGHT_ARROW_KEY)){
+            m_speed[0].set_x(-1.0 / dt);
+            m_speed[1].set_x(-0.6 / dt);
+        }
+        if(input_manager.is_key_down(LEFT_ARROW_KEY)){
+            m_speed[0].set_x(1.0 / dt);
+            m_speed[1].set_x(0.6 / dt);
+        }
+        if(input_manager.is_key_down(UP_ARROW_KEY)){
+            m_speed[0].set_y(1.0 / dt);
+            m_speed[1].set_y(0.6 / dt);
+        }
+        if(input_manager.is_key_down(DOWN_ARROW_KEY)){
+            m_speed[0].set_y(-1.0 / dt);
+            m_speed[1].set_y(-0.6 / dt);
+        }
 
-    m_pos[0].increment_x(m_speed[0].get_x());
-    m_pos[0].increment_y(m_speed[0].get_y());
+        m_pos[0].increment_x(m_speed[0].get_x());
+        m_pos[0].increment_y(m_speed[0].get_y());
 
-    m_pos[1].increment_x(m_speed[1].get_x());
-    m_pos[1].increment_y(m_speed[1].get_y());
+        m_pos[1].increment_x(m_speed[1].get_x());
+        m_pos[1].increment_y(m_speed[1].get_y());
+    }
 }

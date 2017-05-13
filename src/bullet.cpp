@@ -21,7 +21,7 @@ void Bullet::update(double dt) {
 }
 
 void Bullet::render() {
-    m_sp.render(m_box.get_x() + Camera::m_pos[0].get_x(), m_box.get_y() + Camera::m_pos[0].get_y(), m_rotation);
+    m_sp.render(m_box.draw_x() + Camera::m_pos[0].get_x(), m_box.draw_y() + Camera::m_pos[0].get_y(), m_rotation);
 }
 
 bool Bullet::is_dead() {

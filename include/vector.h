@@ -12,6 +12,7 @@ class Vector {
     public:
         Vector(double x = 0, double y = 0);
         Vector(Rectangle r);
+        Vector(const Vector &v);
 
         double get_x();
         double get_y();
