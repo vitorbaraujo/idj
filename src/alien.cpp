@@ -95,7 +95,7 @@ bool Alien::is_dead(){
 
 bool Alien::close_enough(Vector other){
     double dist = hypot(m_box.get_x() - other.get_x(), m_box.get_y() - other.get_y());
-    return dist <= 200;
+    return dist <= 300;
 }
 
 Vector Alien::set_speed(Vector pos, double dt){

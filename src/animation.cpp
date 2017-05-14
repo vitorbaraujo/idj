@@ -23,7 +23,7 @@ bool Animation::is_dead(){
     return m_one_time_only && m_end_timer.get() >= m_time_limit;
 }
 
-void Animation::notify_collision(GameObject& other){
+void Animation::notify_collision(GameObject&){
 
 }
 

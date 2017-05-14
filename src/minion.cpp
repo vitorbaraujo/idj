@@ -17,7 +17,7 @@ Minion::Minion(GameObject *minion_center, double arc_offset, double rotation){
     m_box = Rectangle(minion_center->m_box.get_x(), minion_center->m_box.get_y(), m_sp.get_width(), m_sp.get_height());
 
     // set scale between 1.0 and 1.5
-    double random_scale = 1.0 + double(rand()) / double(RAND_MAX/(0.5));
+    double random_scale = 1.0 + (rand()) / (RAND_MAX/(0.5));
     m_sp.set_scale_x(random_scale);
     m_sp.set_scale_y(random_scale);
 }
@@ -59,7 +59,7 @@ void Minion::shoot(Vector pos){
     state->add_object(bullet);
 }
 
-void Minion::notify_collision(GameObject& other){
+void Minion::notify_collision(GameObject&){
 
 }
 

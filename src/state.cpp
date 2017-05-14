@@ -12,7 +12,7 @@ State::State() : m_requested_quit(false) {
     m_tile_set = new TileSet(64, 64, "img/tileset.png");
     m_tile_map = new TileMap("map/tileMap.txt", m_tile_set);
 
-    Alien* alien = new Alien(512, 300, 6);
+    Alien* alien = new Alien(412, 200, 6);
     m_objects_array.emplace_back(alien);
 
     Penguins* penguins = new Penguins(704, 640);

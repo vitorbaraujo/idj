@@ -4,8 +4,8 @@
 #include "game.h"
 #include "animation.h"
 
-#define MAX_SPEED 600.0
-#define MIN_SPEED -600.0
+#define MAX_SPEED 300.0
+#define MIN_SPEED -300.0
 
 #define BULLET_TIME 0.5
 
