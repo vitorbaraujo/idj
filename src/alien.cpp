@@ -2,6 +2,7 @@
 #include "rectangle.h"
 #include "input_manager.h"
 #include "camera.h"
+#include "bullet.h"
 
 #define SPEED_FACTOR 100
 #define ROTATE_FACTOR 0.5
@@ -116,7 +117,8 @@ Vector Alien::set_speed(Vector pos, double dt){
 }
 
 void Alien::notify_collision(GameObject& other){
-
+    if(other.is("bullet") && !((Bullet&)other).m_targets_player)
+        m_hp -= 5;
 }
 
 bool Alien::is(string type){

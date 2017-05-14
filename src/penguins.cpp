@@ -56,7 +56,7 @@ void Penguins::update(double dt){
     m_cannon_angle = atan2(mouse_y - m_box.get_y(), mouse_x - m_box.get_x());
 
     if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON)){
-        // shoot();
+        shoot();
     }
 
     double rad_rotation = Utils::to_rad(m_rotation);
@@ -99,17 +99,16 @@ void Penguins::shoot(){
     Vector cannon_end(cannon_x + m_cannon_sp.get_width() * 0.8, cannon_y);
     cannon_end.rotate(m_cannon_angle, Vector(cannon_x, cannon_y));
 
-    Bullet *bullet = new Bullet(cannon_end.get_x(), cannon_end.get_y(), m_cannon_angle, speed, max_distance, "img/penguinbullet.png", BULLET_TIME, 4);
+    Bullet *bullet = new Bullet(cannon_end.get_x(), cannon_end.get_y(), m_cannon_angle, speed, max_distance, "img/penguinbullet.png", BULLET_TIME, 4, false);
 
     State *state = Game::get_instance().get_state();
     state->add_object(bullet);
 }
 
 void Penguins::notify_collision(GameObject& other){
-    printf("NOTIFY PENGUIN\n");
-    // FIX hp loss
     if(other.is("bullet")){
-        // m_hp -= 5;
+        if(((Bullet&)other).m_targets_player)
+            m_hp -= 5;
     }
 }
 

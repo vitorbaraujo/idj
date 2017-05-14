@@ -53,7 +53,7 @@ void Minion::shoot(Vector pos){
     double speed = 100;
     double max_distance = 8000;
 
-    Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet2.png", 1, 3);
+    Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet2.png", 1, 3, true);
 
     State *state = Game::get_instance().get_state();
     state->add_object(bullet);
