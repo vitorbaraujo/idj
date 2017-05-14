@@ -9,6 +9,8 @@
 
 #define BULLET_TIME 0.5
 
+Penguins* Penguins::m_player;
+
 Penguins::Penguins(double x, double y, double rotation){
     m_body_sp = Sprite("img/penguin.png");
     m_cannon_sp = Sprite("img/cubngun.png");

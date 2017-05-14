@@ -32,7 +32,7 @@ class Penguins : public GameObject {
         void notify_collision(GameObject& other);
         bool is(string type);
 
-        Penguins* m_player;
+        static Penguins* m_player;
         Timer m_timer;
 };
 

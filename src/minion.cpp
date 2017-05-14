@@ -5,7 +5,7 @@
 #include "state.h"
 #include "game.h"
 
-#define OFFSET 200
+#define OFFSET 100
 #define SPEED_FACTOR 100
 
 Minion::Minion(GameObject *minion_center, double arc_offset, double rotation){
