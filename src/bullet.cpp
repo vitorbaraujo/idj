@@ -3,7 +3,7 @@
 
 Bullet::Bullet(double x, double y, double angle, double speed, double max_distance, string sprite, double frame_time, int frame_count, bool targets_player) {
     m_sp = Sprite(sprite, frame_count, frame_time);
-    m_box = Rectangle(x, y, m_sp.get_height(), m_sp.get_width());
+    m_box = Rectangle(x, y, m_sp.get_width(), m_sp.get_height());
     m_speed = Vector(cos(angle) * speed, sin(angle) * speed);
     m_distance_left = max_distance;
     m_rotation = Utils::to_deg(angle);

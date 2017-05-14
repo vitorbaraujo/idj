@@ -2,6 +2,7 @@
 #include "bullet.h"
 #include "state.h"
 #include "game.h"
+#include "animation.h"
 
 #define MAX_SPEED 600.0
 #define MIN_SPEED -600.0
@@ -29,8 +30,13 @@ Penguins::~Penguins(){
 void Penguins::update(double dt){
     m_timer.update(dt);
 
-    if(is_dead())
+    if(is_dead()){
+        Animation *animation = new Animation(m_box.get_x(), m_box.get_y(), m_rotation, "img/penguindeath.png", 5, 0.1, 0.5, true);
+        State *state = Game::get_instance().get_state();
+        state->add_object(animation);    
+
         Camera::unfollow();
+    }
 
     InputManager input_manager = InputManager::get_instance();
     double mouse_x = input_manager.get_mouse_x() - Camera::m_pos[0].get_x();

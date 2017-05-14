@@ -35,7 +35,7 @@ void Minion::update(double dt){
 
     pos.rotate(angle, m_center->m_box);
 
-    m_box = Rectangle(pos.get_x(), pos.get_y(), m_sp.get_height(), m_sp.get_width());
+    m_box = Rectangle(pos.get_x(), pos.get_y(), m_sp.get_width(), m_sp.get_height());
 }
 
 void Minion::render(){
