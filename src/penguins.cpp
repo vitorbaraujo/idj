@@ -59,7 +59,7 @@ void Penguins::update(double dt){
         // shoot();
     }
 
-    double rad_rotation = m_rotation * acos(-1) / 180.0;
+    double rad_rotation = Utils::to_rad(m_rotation);
 
     m_speed = Vector(dt * m_linear_speed * cos(rad_rotation), dt * m_linear_speed * sin(rad_rotation));
 
@@ -68,7 +68,7 @@ void Penguins::update(double dt){
 }
 
 void Penguins::render(){
-    double cannon_deg_angle = m_cannon_angle * 180 / acos(-1);
+    double cannon_deg_angle = Utils::to_deg(m_cannon_angle);
 
     double diff_w = fabs(m_body_sp.get_width() - m_cannon_sp.get_width()) / 2;
     double diff_h = fabs(m_body_sp.get_height() - m_cannon_sp.get_height()) / 2;

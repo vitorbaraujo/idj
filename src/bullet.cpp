@@ -6,7 +6,7 @@ Bullet::Bullet(double x, double y, double angle, double speed, double max_distan
     m_box = Rectangle(x, y, m_sp.get_height(), m_sp.get_width());
     m_speed = Vector(cos(angle) * speed, sin(angle) * speed);
     m_distance_left = max_distance;
-    m_rotation = (angle * 180) / acos(-1);
+    m_rotation = Utils::to_deg(angle);
 }
 
 void Bullet::update(double dt) {

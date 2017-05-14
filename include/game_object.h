@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "rectangle.h"
+#include "utils.h"
 
 using std::string;
 

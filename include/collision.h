@@ -6,6 +6,7 @@
 
 #include "rectangle.h"
 #include "vector.h"
+#include "utils.h"
 
 class Collision {
     private:

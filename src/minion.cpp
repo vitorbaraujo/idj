@@ -25,7 +25,8 @@ Minion::Minion(GameObject *minion_center, double arc_offset, double rotation){
 void Minion::update(double dt){
     m_arc += SPEED_FACTOR * dt;
     if(m_arc > 360) m_arc = 0;
-    double angle = m_arc * acos(-1) / 180.0;
+
+    double angle = Utils::to_rad(m_arc);
 
     m_rotation = m_arc + 90;
 
