@@ -27,6 +27,8 @@ Penguins::~Penguins(){
 }
 
 void Penguins::update(double dt){
+    m_timer.update(dt);
+
     if(is_dead())
         Camera::unfollow();
 
@@ -55,7 +57,8 @@ void Penguins::update(double dt){
 
     m_cannon_angle = atan2(mouse_y - m_box.get_y(), mouse_x - m_box.get_x());
 
-    if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON)){
+    if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON) && m_timer.get() > 1.0){
+        m_timer.restart();
         shoot();
     }
 

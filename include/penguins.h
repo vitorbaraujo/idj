@@ -7,6 +7,7 @@
 #include "game_object.h"
 #include "sprite.h"
 #include "camera.h"
+#include "timer.h"
 
 using std::max;
 using std::min;
@@ -32,6 +33,7 @@ class Penguins : public GameObject {
         bool is(string type);
 
         Penguins* m_player;
+        Timer m_timer;
 };
 
 #endif
