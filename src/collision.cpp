@@ -1,21 +1,18 @@
 #include "collision.h"
 
-// FIXME
-// fix collision
-
 bool Collision::is_colliding(Rectangle& a, Rectangle& b, double a_angle, double b_angle){
-    a_angle = Utils::to_deg(a_angle);
-    b_angle = Utils::to_deg(b_angle);
+    a_angle = Utils::to_rad(a_angle);
+    b_angle = Utils::to_rad(b_angle);
 
     Vector A[] = {  Vector( a.get_x(), a.get_y() + a.get_h() ),
-        Vector( a.get_x() + a.get_w(), a.get_y() + a.get_h() ),
-        Vector( a.get_x() + a.get_w(), a.get_y() ),
-        Vector( a.get_x(), a.get_y() )
+                    Vector( a.get_x() + a.get_w(), a.get_y() + a.get_h() ),
+                    Vector( a.get_x() + a.get_w(), a.get_y() ),
+                    Vector( a.get_x(), a.get_y() )
     };
     Vector B[] = {  Vector( b.get_x(), b.get_y() + b.get_h() ),
-        Vector( b.get_x() + b.get_w(), b.get_y() + b.get_h() ),
-        Vector( b.get_x() + b.get_w(), b.get_y() ),
-        Vector( b.get_x(), b.get_y() )
+                    Vector( b.get_x() + b.get_w(), b.get_y() + b.get_h() ),
+                    Vector( b.get_x() + b.get_w(), b.get_y() ),
+                    Vector( b.get_x(), b.get_y() )
     };
 
     for(auto& v : A){

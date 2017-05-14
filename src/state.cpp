@@ -54,6 +54,12 @@ void State::update(double dt){
             Rectangle it_box = m_objects_array[it]->m_box;
             Rectangle it2_box = m_objects_array[it2]->m_box;
 
+            it_box.set_x(it_box.draw_x() + Camera::m_pos[0].get_x());
+            it_box.set_y(it_box.draw_y() + Camera::m_pos[0].get_y());
+
+            it2_box.set_x(it2_box.draw_x() + Camera::m_pos[0].get_x());
+            it2_box.set_y(it2_box.draw_y() + Camera::m_pos[0].get_y());
+
             double it_angle = m_objects_array[it]->m_rotation;
             double it2_angle = m_objects_array[it2]->m_rotation;
 

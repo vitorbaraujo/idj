@@ -51,7 +51,7 @@ void Minion::shoot(Vector pos){
 
     double angle = atan2(pos.get_y() - m_box.get_y(), pos.get_x() - m_box.get_x());
     double speed = 100;
-    double max_distance = 20000;
+    double max_distance = 8000;
 
     Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet2.png", 1, 3);
 

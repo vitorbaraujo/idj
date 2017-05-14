@@ -8,7 +8,7 @@
 
 #define BULLET_TIME 0.5
 
-Penguins::Penguins(double x, double y){
+Penguins::Penguins(double x, double y, double rotation){
     m_body_sp = Sprite("img/penguin.png");
     m_cannon_sp = Sprite("img/cubngun.png");
     m_speed = Vector(0,0);
@@ -18,7 +18,7 @@ Penguins::Penguins(double x, double y){
 
     m_player = this;
 
-    m_rotation = 0;
+    m_rotation = rotation;
     m_box = Rectangle(x, y, m_body_sp.get_width(), m_body_sp.get_height());
 }
 
@@ -45,12 +45,12 @@ void Penguins::update(double dt){
     }
 
     if(input_manager.is_key_down(A_KEY)){
-        m_rotation += angle_offset;
-        if(m_rotation > 360) m_rotation = 0;
-    }
-    else if(input_manager.is_key_down(D_KEY)){
         m_rotation -= angle_offset;
         if(m_rotation < 0) m_rotation = 360;
+    }
+    else if(input_manager.is_key_down(D_KEY)){
+        m_rotation += angle_offset;
+        if(m_rotation > 360) m_rotation = 0;
     }
 
     m_cannon_angle = atan2(mouse_y - m_box.get_y(), mouse_x - m_box.get_x());
@@ -109,7 +109,7 @@ void Penguins::notify_collision(GameObject& other){
     printf("NOTIFY PENGUIN\n");
     // FIX hp loss
     if(other.is("bullet")){
-        m_hp -= 5;
+        // m_hp -= 5;
     }
 }
 

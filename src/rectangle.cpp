@@ -45,5 +45,5 @@ bool Rectangle::is_inside(double mouse_x, double mouse_y) {
 }
 
 Rectangle Rectangle::get_center(){
-    return Rectangle(draw_x(), draw_y());
+    return Rectangle(m_x + m_w / 2, m_y + m_h / 2);
 }

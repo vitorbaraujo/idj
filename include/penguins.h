@@ -21,7 +21,7 @@ class Penguins : public GameObject {
         int m_hp;
 
     public:
-        Penguins(double x, double y);
+        Penguins(double x, double y, double rotation = 0);
         ~Penguins();
 
         void update(double dt);
