@@ -18,6 +18,7 @@ class Rectangle {
         void set_x(double x);
         void set_y(double y);
         bool is_inside(double mouse_x, double mouse_y);
+        Rectangle get_center();
 };
 
 #endif

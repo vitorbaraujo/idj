@@ -19,8 +19,11 @@ void Camera::update(double dt){
     m_speed[1] = Vector(0, 0);
 
     if(m_focus){
-        m_pos[0] = Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-        m_pos[1] = Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        double focus_x = m_focus->m_box.get_x();
+        double focus_y = m_focus->m_box.get_y();
+
+        m_pos[0] = Vector(-focus_x + SCREEN_WIDTH / 2, -focus_y + SCREEN_HEIGHT / 2);
+        m_pos[1] = Vector(-focus_x + SCREEN_WIDTH / 2, -focus_y + SCREEN_HEIGHT / 2);
     }
     else{
         if(input_manager.is_key_down(RIGHT_ARROW_KEY)){

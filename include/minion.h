@@ -17,6 +17,8 @@ class Minion : public GameObject {
         void update(double dt);
         void render();
         bool is_dead();
+        void notify_collision(GameObject& other);
+        bool is(string type);
         void shoot(Vector pos);
 };
 

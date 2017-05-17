@@ -4,14 +4,21 @@
 #include "input_manager.h"
 #include "camera.h"
 #include "alien.h"
+#include "penguins.h"
+#include "collision.h"
 
 State::State() : m_requested_quit(false) {
     m_bg = new Sprite();
     m_tile_set = new TileSet(64, 64, "img/tileset.png");
     m_tile_map = new TileMap("map/tileMap.txt", m_tile_set);
 
-    Alien* alien = new Alien(512, 300, 6);
+    Alien* alien = new Alien(412, 200, 6);
     m_objects_array.emplace_back(alien);
+
+    Penguins* penguins = new Penguins(704, 640);
+    m_objects_array.emplace_back(penguins);
+
+    Camera::follow(penguins);
 }
 
 State::~State() {
@@ -33,12 +40,33 @@ void State::update(double dt){
         m_requested_quit = true;
     }
 
-    for(int it = 0; it < m_objects_array.size(); ++it){
+    for(unsigned int it = 0; it < m_objects_array.size(); ++it){
         m_objects_array[it]->update(dt);
 
         if(m_objects_array[it]->is_dead()){
             m_objects_array.erase(m_objects_array.begin() + it);
             break;
+        }
+    }
+
+    for(unsigned int it = 0; it < m_objects_array.size(); ++it){
+        for(unsigned int it2 = it + 1; it2 < m_objects_array.size(); ++it2){
+            Rectangle it_box = m_objects_array[it]->m_box;
+            Rectangle it2_box = m_objects_array[it2]->m_box;
+
+            it_box.set_x(it_box.draw_x() + Camera::m_pos[0].get_x());
+            it_box.set_y(it_box.draw_y() + Camera::m_pos[0].get_y());
+
+            it2_box.set_x(it2_box.draw_x() + Camera::m_pos[0].get_x());
+            it2_box.set_y(it2_box.draw_y() + Camera::m_pos[0].get_y());
+
+            double it_angle = m_objects_array[it]->m_rotation;
+            double it2_angle = m_objects_array[it2]->m_rotation;
+
+            if(Collision::is_colliding(it_box, it2_box, it_angle, it2_angle)){
+                m_objects_array[it]->notify_collision(*m_objects_array[it2]);
+                m_objects_array[it2]->notify_collision(*m_objects_array[it]);
+            }
         }
     }
 }

@@ -12,9 +12,10 @@ class Vector {
     public:
         Vector(double x = 0, double y = 0);
         Vector(Rectangle r);
+        Vector(const Vector &v);
 
-        double get_x();
-        double get_y();
+        double get_x() const;
+        double get_y() const;
         void increment_x(double x);
         void increment_y(double y);
         void set_x(double x);
@@ -25,6 +26,10 @@ class Vector {
         void translate(double dx, double dy);
         void rotate(double angle);
         void rotate(double angle, Vector c);
+
+        Vector operator+(const Vector& rhs) const;
+        Vector operator-(const Vector& rhs) const;
+        Vector operator*(const double rhs) const;
 };
 
 #endif
