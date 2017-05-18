@@ -7,6 +7,8 @@
 #include "rectangle.h"
 #include "sprite.h"
 #include "vector.h"
+#include "title_state.h"
+#include "game.h"
 
 StageState::StageState() {
     m_bg = Sprite("img/ocean.jpg");
@@ -31,8 +33,16 @@ void StageState::update(double dt){
 
     Camera::update(dt);
 
-    if(input_manager.is_key_down(ESCAPE_KEY) || input_manager.quit_requested()){
+    if(input_manager.quit_requested()){
         m_quit_requested = true;
+    }
+
+    if(input_manager.is_key_down(ESCAPE_KEY)){
+        // go back to title screen
+        TitleState* title_state = new TitleState();
+        Game::get_instance().push(title_state);
+
+        m_pop_requested = true;
     }
 
     update_array(dt);

@@ -85,6 +85,7 @@ void Game::run(){
     while(!m_state_stack.empty() && !m_state_stack.top()->quit_requested()){
         calculate_delta_time();
         InputManager::get_instance().update();
+
         m_state_stack.top()->update(get_delta_time());
         m_state_stack.top()->render();
 
@@ -92,13 +93,16 @@ void Game::run(){
 
         if(m_state_stack.top()->pop_requested()){
             m_state_stack.pop();
-            // check if stack not empty
-            if(!m_state_stack.empty()) continue;
 
-            m_state_stack.top()->resume();
+            if(!m_state_stack.empty()){
+                m_state_stack.top()->resume();
+            }
 
-            if(!m_stored_state){
-                m_state_stack.top()->pause();
+            if(m_stored_state){
+                if(!m_state_stack.empty()){
+                    m_state_stack.top()->pause();
+                }
+
                 m_state_stack.emplace(m_stored_state);
                 m_stored_state = nullptr;
             }

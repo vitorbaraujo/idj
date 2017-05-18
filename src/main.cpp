@@ -1,6 +1,8 @@
 #include "game.h"
 #include "stage_state.h"
 
+#include "title_state.h"
+
 using namespace std;
 
 int main(int argc, char** argv){
