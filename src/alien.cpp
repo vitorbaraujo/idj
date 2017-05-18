@@ -39,7 +39,7 @@ void Alien::update(double dt){
     if(Penguins::m_player){
         if(m_rest_timer.get() > AI_COOLDOWN){
             m_destination = Penguins::m_player->m_box;
-    
+
             m_speed = set_speed(m_destination, dt);
             m_state = Alien::AlienState::MOVING;
         }
@@ -52,23 +52,22 @@ void Alien::update(double dt){
             m_box.set_y(m_box.get_y() + m_speed.get_y());
 
             if(close_enough(m_destination)){
-                m_destination = Penguins::m_player->m_box;    
+                m_destination = Penguins::m_player->m_box;
                 m_minion_array[get_closest_minion()].shoot(m_destination);
                 m_rest_timer.restart();
-                m_state = Alien::AlienState::RESTING;  
+                m_state = Alien::AlienState::RESTING;
             }
         }
     }
 
     if(is_dead()){
-        State *state = Game::get_instance().get_state();
-
         Animation *alien_animation = new Animation(m_box.get_x(), m_box.get_y(), 0, "img/aliendeath.png", 4, 0.1, 0.5, true);
-        state->add_object(alien_animation);    
+
+        Game::get_instance().get_current_state().add_object(alien_animation);
 
         for(auto minion : m_minion_array){
             Animation *minion_animation = new Animation(minion.m_box.get_x(), minion.m_box.get_y(), 0, "img/miniondeath.png", 4, 0.1, 0.5, true);
-            state->add_object(minion_animation);
+            Game::get_instance().get_current_state().add_object(minion_animation);
         }
     }
 

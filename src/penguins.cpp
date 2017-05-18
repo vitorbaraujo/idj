@@ -1,6 +1,6 @@
 #include "penguins.h"
 #include "bullet.h"
-#include "state.h"
+#include "stage_state.h"
 #include "game.h"
 #include "animation.h"
 
@@ -34,8 +34,7 @@ void Penguins::update(double dt){
 
     if(is_dead()){
         Animation *animation = new Animation(m_box.get_x(), m_box.get_y(), m_rotation, "img/penguindeath.png", 5, 0.1, 0.5, true);
-        State *state = Game::get_instance().get_state();
-        state->add_object(animation);    
+        Game::get_instance().get_current_state().add_object(animation);
 
         Camera::unfollow();
     }
@@ -48,7 +47,7 @@ void Penguins::update(double dt){
     double acceleration = 10;
 
     if(input_manager.is_key_down(W_KEY)){
-        m_linear_speed = min(m_linear_speed + acceleration, MAX_SPEED);     
+        m_linear_speed = min(m_linear_speed + acceleration, MAX_SPEED);
     }
     else if(input_manager.is_key_down(S_KEY)){
         m_linear_speed = max(m_linear_speed - acceleration, MIN_SPEED);
@@ -112,8 +111,7 @@ void Penguins::shoot(){
 
     Bullet *bullet = new Bullet(cannon_end.get_x(), cannon_end.get_y(), m_cannon_angle, speed, max_distance, "img/penguinbullet.png", BULLET_TIME, 4, false);
 
-    State *state = Game::get_instance().get_state();
-    state->add_object(bullet);
+    Game::get_instance().get_current_state().add_object(bullet);
 }
 
 void Penguins::notify_collision(GameObject& other){

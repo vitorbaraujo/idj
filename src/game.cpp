@@ -9,7 +9,7 @@ Game::Game(string title, int width, int height){
     m_frame_start = 0;
 
     if(m_instance == nullptr){
-        m_instance = this; 
+        m_instance = this;
     }
 
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0){
@@ -39,11 +39,17 @@ Game::Game(string title, int width, int height){
         return;
     }
 
-    m_state = new State();
+    m_stored_state = nullptr;
 }
 
 Game::~Game(){
-    delete(m_state);
+    if(m_stored_state)
+        delete(m_stored_state);
+
+    while(!m_state_stack.empty()){
+        // should delete something?
+        m_state_stack.pop();
+    }
 
     IMG_Quit();
     SDL_DestroyRenderer(m_renderer);
@@ -59,32 +65,57 @@ SDL_Renderer* Game::get_renderer(){
     return m_renderer;
 }
 
-State* Game::get_state(){
-    return m_state;
+State& Game::get_current_state(){
+    return *(m_state_stack.top());
+}
+
+void Game::push(State* state){
+    m_stored_state = state;
 }
 
 void Game::run(){
-    m_state->load_assets();
+    // if there is no initial state, end the game
+    if(!m_stored_state){
+        return;
+    }
 
-    while(!m_state->quit_requested()){
+    m_state_stack.emplace(m_stored_state);
+    m_stored_state = nullptr;
+
+    while(!m_state_stack.empty() && !m_state_stack.top()->quit_requested()){
         calculate_delta_time();
         InputManager::get_instance().update();
-        m_state->update(get_delta_time());
-        m_state->render();
+        m_state_stack.top()->update(get_delta_time());
+        m_state_stack.top()->render();
 
         SDL_RenderPresent(m_renderer);
+
+        if(m_state_stack.top()->pop_requested()){
+            m_state_stack.pop();
+            // check if stack not empty
+            if(!m_state_stack.empty()) continue;
+
+            m_state_stack.top()->resume();
+
+            if(!m_stored_state){
+                m_state_stack.top()->pause();
+                m_state_stack.emplace(m_stored_state);
+                m_stored_state = nullptr;
+            }
+        }
+
         SDL_Delay(33);
     }
 
     Resources::clear_images();
 }
 
+double Game::get_delta_time(){
+    return m_dt;
+}
+
 void Game::calculate_delta_time(){
     unsigned int current_time = SDL_GetTicks();
     m_dt = (current_time - m_frame_start) / 1000.0;
     m_frame_start = current_time;
-}
-
-double Game::get_delta_time(){
-    return m_dt;
 }
