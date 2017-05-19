@@ -9,6 +9,8 @@
 #include "vector.h"
 #include "title_state.h"
 #include "game.h"
+#include "state_data.h"
+#include "end_state.h"
 
 StageState::StageState() {
     m_bg = Sprite("img/ocean.jpg");
@@ -16,11 +18,15 @@ StageState::StageState() {
     m_tile_map = new TileMap("map/tileMap.txt", m_tile_set);
     m_music = Music("audio/stageState.ogg");
 
-    Alien* alien = new Alien(412, 200, 6);
     Penguins* penguins = new Penguins(704, 640);
-
-    add_object(alien);
     add_object(penguins);
+
+    add_object(new Alien(200, 800, 6));
+    add_object(new Alien(100, 550, 6));
+    add_object(new Alien(412, 200, 6));
+    add_object(new Alien(50, 200, 6));
+    add_object(new Alien(600, 600, 6));
+    add_object(new Alien(1000, 1000, 6));
 
     Camera::follow(penguins);
     m_music.play(-1);
@@ -42,7 +48,24 @@ void StageState::update(double dt){
         // go back to title screen
         Game::get_instance().push(new TitleState());
         m_pop_requested = true;
+        return;
+    }
 
+    StateData state_data;
+
+    // loss condition
+    if(Penguins::m_player == nullptr){
+        state_data.player_victory = false;
+        Game::get_instance().push(new EndState(state_data));
+        m_pop_requested = true;
+        return;
+    }
+
+    // victory condition
+    if(Alien::m_alien_count == 0){
+        state_data.player_victory = true;
+        Game::get_instance().push(new EndState(state_data));
+        m_pop_requested = true;
         return;
     }
 

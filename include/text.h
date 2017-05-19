@@ -12,6 +12,9 @@
 using std::string;
 using std::shared_ptr;
 
+#define BLACK { 0, 0, 0, 0 }
+#define WHITE { 255, 255, 255, 255 }
+
 class Text {
     public:
         enum TextStyle { SOLID, SHADED, BLENDED };
@@ -28,9 +31,6 @@ class Text {
         void remake_texture();
 
     public:
-        static constexpr SDL_Color BLACK = { 0, 0, 0, 0 };
-        static constexpr SDL_Color WHITE = { 255, 255, 255, 255 };
-
         Text(string font_file, int font_size, TextStyle style, string text, SDL_Color color = BLACK, int x = 0, int y = 0);
         Text();
         ~Text();

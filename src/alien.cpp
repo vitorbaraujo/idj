@@ -10,7 +10,6 @@
 
 #define SPEED_FACTOR 100
 #define ROTATE_FACTOR 0.5
-#define AI_COOLDOWN 3
 
 int Alien::m_alien_count;
 
@@ -38,25 +37,28 @@ Alien::~Alien(){
 void Alien::update(double dt){
     // AI only if player is alive
     if(Penguins::m_player){
-        if(m_rest_timer.get() > AI_COOLDOWN){
+        int ai_cooldown = rand() % 30;
+        if(m_rest_timer.get() > ai_cooldown){
             m_destination = Penguins::m_player->m_box;
 
             m_speed = set_speed(m_destination, dt);
             m_state = Alien::AlienState::MOVING;
+            m_rest_timer.restart();
         }
 
         if(m_state == Alien::AlienState::RESTING){
             m_rest_timer.update(dt);
         }
         else if(m_state == Alien::AlienState::MOVING){
-            m_box.set_x(m_box.get_x() + m_speed.get_x());
-            m_box.set_y(m_box.get_y() + m_speed.get_y());
-
             if(close_enough(m_destination)){
                 m_destination = Penguins::m_player->m_box;
                 m_minion_array[get_closest_minion()].shoot(m_destination);
-                m_rest_timer.restart();
                 m_state = Alien::AlienState::RESTING;
+                m_rest_timer.restart();
+            }
+            else{
+                m_box.set_x(m_box.get_x() + m_speed.get_x());
+                m_box.set_y(m_box.get_y() + m_speed.get_y());
             }
         }
     }
@@ -98,7 +100,7 @@ bool Alien::is_dead(){
 
 bool Alien::close_enough(Vector other){
     double dist = hypot(m_box.get_x() - other.get_x(), m_box.get_y() - other.get_y());
-    return dist <= 300;
+    return dist <= 20;
 }
 
 Vector Alien::set_speed(Vector pos, double dt){

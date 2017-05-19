@@ -18,7 +18,7 @@ void TitleState::update(double dt){
         return;
     }
 
-    if(input_manager.is_key_down(SPACE_KEY)){
+    if(input_manager.on_key_press(SPACE_KEY)){
         Game::get_instance().push(new StageState());
         m_pop_requested = true;
         return;

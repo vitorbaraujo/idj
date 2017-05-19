@@ -7,7 +7,8 @@
 
 #define MAX_SPEED 300.0
 #define MIN_SPEED -300.0
-
+#define MAP_WIDTH 1408
+#define MAP_HEIGHT 1280
 #define BULLET_TIME 0.5
 
 Penguins* Penguins::m_player;
@@ -77,8 +78,17 @@ void Penguins::update(double dt){
 
     m_speed = Vector(dt * m_linear_speed * cos(rad_rotation), dt * m_linear_speed * sin(rad_rotation));
 
-    m_box.set_x(m_box.get_x() + m_speed.get_x());
-    m_box.set_y(m_box.get_y() + m_speed.get_y());
+    double updated_x = m_box.get_x() + m_speed.get_x();
+    double updated_y = m_box.get_y() + m_speed.get_y();
+
+    // make penguin walk only on map
+    if(updated_x > MAP_WIDTH) m_box.set_x(MAP_WIDTH);
+    else if(updated_x < 0) m_box.set_x(0);
+    else m_box.set_x(updated_x);
+
+    if(updated_y > MAP_HEIGHT) m_box.set_y(MAP_HEIGHT);
+    else if(updated_y < 0) m_box.set_y(0);
+    else m_box.set_y(updated_y);
 }
 
 void Penguins::render(){
