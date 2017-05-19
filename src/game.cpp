@@ -40,20 +40,29 @@ Game::Game(string title, int width, int height){
     }
 
     m_stored_state = nullptr;
+
+    // dealing with music
+    if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0){
+        printf("Mix_OpenAudio error: %s\n", Mix_GetError());
+        return;
+    }
 }
 
 Game::~Game(){
-    if(m_stored_state)
-        delete(m_stored_state);
+    m_instance = nullptr;
+
+    if(m_stored_state){
+        m_stored_state = nullptr;
+    }
 
     while(!m_state_stack.empty()){
-        // should delete something?
         m_state_stack.pop();
     }
 
     IMG_Quit();
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
+
     SDL_Quit();
 }
 
@@ -117,6 +126,7 @@ void Game::run(){
     }
 
     Resources::clear_images();
+    Resources::clear_music();
 }
 
 double Game::get_delta_time(){

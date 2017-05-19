@@ -14,6 +14,7 @@ StageState::StageState() {
     m_bg = Sprite("img/ocean.jpg");
     m_tile_set = new TileSet(64, 64, "img/tileset.png");
     m_tile_map = new TileMap("map/tileMap.txt", m_tile_set);
+    m_music = Music("audio/stageState.ogg");
 
     Alien* alien = new Alien(412, 200, 6);
     Penguins* penguins = new Penguins(704, 640);
@@ -22,10 +23,12 @@ StageState::StageState() {
     add_object(penguins);
 
     Camera::follow(penguins);
+    m_music.play(-1);
 }
 
 StageState::~StageState() {
     delete(m_tile_set);
+    delete(m_tile_map);
 }
 
 void StageState::update(double dt){
