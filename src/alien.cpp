@@ -6,6 +6,7 @@
 #include "animation.h"
 #include "game.h"
 #include "penguins.h"
+#include "sound.h"
 
 #define SPEED_FACTOR 100
 #define ROTATE_FACTOR 0.5
@@ -61,6 +62,9 @@ void Alien::update(double dt){
     }
 
     if(is_dead()){
+        Sound sound("audio/boom.wav");
+        sound.play(0); // loops + 1 times
+
         Animation *alien_animation = new Animation(m_box.get_x(), m_box.get_y(), 0, "img/aliendeath.png", 4, 0.1, 0.5, true);
 
         Game::get_instance().get_current_state().add_object(alien_animation);

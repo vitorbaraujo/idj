@@ -3,6 +3,7 @@
 #include "stage_state.h"
 #include "game.h"
 #include "animation.h"
+#include "sound.h"
 
 #define MAX_SPEED 300.0
 #define MIN_SPEED -300.0
@@ -33,6 +34,9 @@ void Penguins::update(double dt){
     m_timer.update(dt);
 
     if(is_dead()){
+        Sound sound("audio/boom.wav");
+        sound.play(0); // loops + 1 times
+
         Animation *animation = new Animation(m_box.get_x(), m_box.get_y(), m_rotation, "img/penguindeath.png", 5, 0.1, 0.5, true);
         Game::get_instance().get_current_state().add_object(animation);
 
