@@ -4,10 +4,13 @@
 #include "game.h"
 #include "camera.h"
 
+#define TEXT_TIMER_COOLDOWN 0.5
+
 TitleState::TitleState(){
     m_bg = Sprite("img/title.jpg");
     m_text = new Text("font/Call me maybe.ttf", 40, Text::TextStyle::SOLID, "Pressione espaco para continuar");
     m_text->set_pos(512, 500, true);
+    m_show_text = true;
 }
 
 void TitleState::update(double dt){
@@ -24,12 +27,19 @@ void TitleState::update(double dt){
         return;
     }
 
-    update_array(dt);
+    if(m_text_timer.get() > TEXT_TIMER_COOLDOWN){
+        m_show_text = !m_show_text;
+        m_text_timer.restart();
+    }
+
+    m_text_timer.update(dt);
 }
 
 void TitleState::render(){
     m_bg.render(0, 0);
-    m_text->render();
+
+    if(m_show_text)
+        m_text->render();
 }
 
 void TitleState::pause(){

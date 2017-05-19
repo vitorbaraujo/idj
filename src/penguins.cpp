@@ -10,6 +10,7 @@
 #define MAP_WIDTH 1408
 #define MAP_HEIGHT 1280
 #define BULLET_TIME 0.5
+#define GUN_COOLDOWN 0.5
 
 Penguins* Penguins::m_player;
 
@@ -69,7 +70,7 @@ void Penguins::update(double dt){
 
     m_cannon_angle = atan2(mouse_y - m_box.get_y(), mouse_x - m_box.get_x());
 
-    if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON) && m_timer.get() > 1.0){
+    if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON) && m_timer.get() > GUN_COOLDOWN){
         m_timer.restart();
         shoot();
     }

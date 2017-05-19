@@ -6,12 +6,15 @@
 #include "music.h"
 #include "text.h"
 #include "state_data.h"
+#include "timer.h"
 
 class EndState : public State {
     private:
         Sprite m_bg;
         Music m_music;
         Text* m_instruction;
+        Timer m_text_timer;
+        bool m_show_text;
 
     public:
         EndState(StateData state_data);

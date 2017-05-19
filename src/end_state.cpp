@@ -4,6 +4,8 @@
 #include "stage_state.h"
 #include "title_state.h"
 
+#define TEXT_TIMER_COOLDOWN 0.5
+
 EndState::EndState(StateData state_data){
     if(state_data.player_victory){
         m_bg = Sprite("img/win.jpg");
@@ -16,6 +18,7 @@ EndState::EndState(StateData state_data){
 
     m_instruction = new Text("font/Call me maybe.ttf", 25, Text::TextStyle::SOLID, "Pressione ESC para ir ao menu ou espaco para tentar de novo");
     m_instruction->set_pos(512, 550, true);
+    m_show_text = true;
 }
 
 void EndState::update(double dt){
@@ -37,11 +40,20 @@ void EndState::update(double dt){
         m_pop_requested = true;
         return;
     }
+
+    if(m_text_timer.get() > TEXT_TIMER_COOLDOWN){
+        m_show_text = !m_show_text;
+        m_text_timer.restart();
+    }
+
+    m_text_timer.update(dt);
 }
 
 void EndState::render(){
     m_bg.render(0, 0);
-    m_instruction->render();
+
+    if(m_show_text)
+        m_instruction->render();
 }
 
 void EndState::pause(){
