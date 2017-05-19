@@ -39,20 +39,23 @@ Game::Game(string title, int width, int height){
         return;
     }
 
-    m_stored_state = nullptr;
-
     // dealing with music
     if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0){
         printf("Mix_OpenAudio error: %s\n", Mix_GetError());
         return;
     }
+
+    if(TTF_Init() == -1){
+        printf("TTF_init error: %s\n", TTF_GetError());
+        return;
+    }
+
+    m_stored_state = nullptr;
 }
 
 Game::~Game(){
-    m_instance = nullptr;
-
     if(m_stored_state){
-        m_stored_state = nullptr;
+        delete(m_stored_state);
     }
 
     while(!m_state_stack.empty()){
@@ -60,6 +63,9 @@ Game::~Game(){
     }
 
     IMG_Quit();
+    Mix_Quit();
+    TTF_Quit();
+    Mix_CloseAudio();
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
 
@@ -91,10 +97,19 @@ void Game::run(){
     m_state_stack.emplace(m_stored_state);
     m_stored_state = nullptr;
 
-    while(!m_state_stack.empty() && !m_state_stack.top()->quit_requested()){
-        calculate_delta_time();
-        InputManager::get_instance().update();
+    while(!m_state_stack.empty()){
+        if(m_state_stack.top()->quit_requested()){
+            // ensure state stack is empty before freeing resources
+            while(!m_state_stack.empty()){
+                m_state_stack.pop();
+            }
 
+            break;
+        }
+
+        calculate_delta_time();
+
+        InputManager::get_instance().update();
         m_state_stack.top()->update(get_delta_time());
         m_state_stack.top()->render();
 
@@ -106,27 +121,24 @@ void Game::run(){
             if(!m_state_stack.empty()){
                 m_state_stack.top()->resume();
             }
+        }
 
-            if(m_stored_state){
-                if(!m_state_stack.empty()){
-                    m_state_stack.top()->pause();
-                }
-
-                m_state_stack.emplace(m_stored_state);
-                m_stored_state = nullptr;
+        if(m_stored_state){
+            if(!m_state_stack.empty()){
+                m_state_stack.top()->pause();
             }
+
+            m_state_stack.emplace(m_stored_state);
+            m_stored_state = nullptr;
         }
 
         SDL_Delay(33);
     }
 
-    // ensure state stack is empty before freeing resources
-    while(!m_state_stack.empty()){
-        m_state_stack.pop();
-    }
-
     Resources::clear_images();
-    Resources::clear_music();
+    Resources::clear_musics();
+    Resources::clear_sounds();
+    Resources::clear_fonts();
 }
 
 double Game::get_delta_time(){

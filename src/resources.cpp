@@ -4,6 +4,7 @@
 unordered_map<string, shared_ptr<SDL_Texture> > Resources::m_image_table;
 unordered_map<string, shared_ptr<Mix_Music> > Resources::m_music_table;
 unordered_map<string, shared_ptr<Mix_Chunk> > Resources::m_sound_table;
+unordered_map<string, shared_ptr<TTF_Font> > Resources::m_font_table;
 
 shared_ptr<SDL_Texture> Resources::get_image(string file){
     auto it = m_image_table.find(file);
@@ -51,7 +52,7 @@ shared_ptr<Mix_Music> Resources::get_music(string file){
     return ptr;
 }
 
-void Resources::clear_music(){
+void Resources::clear_musics(){
     for(auto it = m_music_table.begin(); it != m_music_table.end(); ++it){
         if(it->second.unique()){
             m_music_table.erase(it);
@@ -79,10 +80,40 @@ shared_ptr<Mix_Chunk> Resources::get_sound(string file){
     return ptr;
 }
 
-void Resources::clear_sound(){
+void Resources::clear_sounds(){
     for(auto it = m_sound_table.begin(); it != m_sound_table.end(); ++it){
         if(it->second.unique()){
             m_sound_table.erase(it);
+        }
+    }
+
+    m_sound_table.clear();
+}
+
+shared_ptr<TTF_Font> Resources::get_font(string file, int font_size){
+    const string font_key = file + to_string(font_size);
+
+    auto it = m_font_table.find(font_key);
+
+    if(it != m_font_table.end())
+        return it->second;
+
+    TTF_Font* font = TTF_OpenFont(file.c_str(), font_size);
+
+    if(!font){
+        return nullptr;
+    }
+
+    shared_ptr<TTF_Font> ptr(font, [](TTF_Font* f){ TTF_CloseFont(f); });
+    m_font_table.emplace(font_key, ptr);
+
+    return ptr;
+}
+
+void Resources::clear_fonts(){
+    for(auto it = m_font_table.begin(); it != m_font_table.end(); ++it){
+        if(it->second.unique()){
+            m_font_table.erase(it);
         }
     }
 

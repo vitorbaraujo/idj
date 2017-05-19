@@ -27,8 +27,10 @@ StageState::StageState() {
 }
 
 StageState::~StageState() {
-    delete(m_tile_set);
+    m_object_array.clear();
+
     delete(m_tile_map);
+    delete(m_tile_set);
 }
 
 void StageState::update(double dt){
@@ -36,16 +38,12 @@ void StageState::update(double dt){
 
     Camera::update(dt);
 
-    if(input_manager.quit_requested()){
-        m_quit_requested = true;
-    }
-
-    if(input_manager.is_key_down(ESCAPE_KEY)){
+    if(input_manager.on_key_press(ESCAPE_KEY) || input_manager.quit_requested()){
         // go back to title screen
-        TitleState* title_state = new TitleState();
-        Game::get_instance().push(title_state);
-
+        Game::get_instance().push(new TitleState());
         m_pop_requested = true;
+
+        return;
     }
 
     update_array(dt);

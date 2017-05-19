@@ -17,7 +17,7 @@ class Music {
         ~Music();
 
         void play(int times);
-        void stop(int ms);
+        void stop(int ms = 0);
         void open(string file);
         bool is_open();
 };

@@ -3,10 +3,12 @@
 
 #include "state.h"
 #include "sprite.h"
+#include "text.h"
 
 class TitleState : public State {
     private:
         Sprite m_bg;
+        Text* m_text;
 
     public:
         TitleState();
