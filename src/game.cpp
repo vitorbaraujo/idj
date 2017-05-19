@@ -111,6 +111,11 @@ void Game::run(){
         SDL_Delay(33);
     }
 
+    // ensure state stack is empty before freeing resources
+    while(!m_state_stack.empty()){
+        m_state_stack.pop();
+    }
+
     Resources::clear_images();
 }
 

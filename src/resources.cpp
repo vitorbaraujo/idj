@@ -1,9 +1,9 @@
 #include "resources.h"
 #include "game.h"
 
-unordered_map<string, SDL_Texture* > Resources::image_table;
+unordered_map<string, shared_ptr<SDL_Texture> > Resources::image_table;
 
-SDL_Texture* Resources::get_image(string file){
+shared_ptr<SDL_Texture> Resources::get_image(string file){
     auto it = image_table.find(file);
 
     if(it != image_table.end())
@@ -11,14 +11,22 @@ SDL_Texture* Resources::get_image(string file){
 
     SDL_Texture* texture = IMG_LoadTexture(Game::get_instance().get_renderer(), file.c_str());
 
-    image_table.emplace(file, texture);
+    if(!texture){
+        return nullptr;
+    }
 
-    return texture;
+    shared_ptr<SDL_Texture> ptr(texture, [](SDL_Texture *t){ SDL_DestroyTexture(t); });
+    image_table.emplace(file, ptr);
+
+    return ptr;
 }
 
 void Resources::clear_images(){
     for(auto it = image_table.begin(); it != image_table.end(); ++it){
-        SDL_DestroyTexture(it->second);
+        if(it->second.unique()){
+            SDL_DestroyTexture(it->second.get());
+            image_table.erase(it);
+        }
     }
 
     image_table.clear();

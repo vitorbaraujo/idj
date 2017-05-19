@@ -33,20 +33,20 @@ void Sprite::open(string filename){
         printf("IMG_LoadTexture error: %s\n", SDL_GetError());
     }
 
-    SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
+    SDL_QueryTexture(m_texture.get(), nullptr, nullptr, &m_width, &m_height);
     m_width /= m_frame_count;
 
     set_clip(0, 0, m_width, m_height);
 }
 
 void Sprite::set_clip(int x, int y, int w, int h){
-    m_clip_rect = new SDL_Rect { x, y, w, h };    
+    m_clip_rect = new SDL_Rect { x, y, w, h };
 }
 
 void Sprite::render(int x, int y, double angle){
     SDL_Rect* dest_rect = new SDL_Rect { x, y, m_clip_rect->w * (int) m_scale_x, m_clip_rect->h * (int) m_scale_y };
 
-    SDL_RenderCopyEx(Game::get_instance().get_renderer(), m_texture, m_clip_rect, dest_rect, angle, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(Game::get_instance().get_renderer(), m_texture.get(), m_clip_rect, dest_rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 int Sprite::get_width(){
