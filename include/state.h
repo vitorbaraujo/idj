@@ -23,6 +23,8 @@ class State {
 
         virtual void add_object(GameObject* object);
 
+        virtual void load_assets();
+
         bool pop_requested();
         bool quit_requested();
 

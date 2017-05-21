@@ -89,6 +89,12 @@ void StageState::pause(){
 void StageState::resume(){
 }
 
+void StageState::load_assets(){
+    Resources::get_image("img/ocean.jpg");
+    Resources::get_image("img/tileset.png");
+    Resources::get_music("audio/stageState.ogg");
+}
+
 void StageState::check_collision(){
     for(unsigned int it = 0; it < m_object_array.size(); ++it){
         for(unsigned int it2 = it + 1; it2 < m_object_array.size(); ++it2){

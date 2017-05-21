@@ -89,11 +89,14 @@ void Game::push(State* state){
 void Game::run(){
     // if there is no initial state, end the game
     if(!m_stored_state){
-        return;
+        printf("No initial state was given. Closing the game.\n");
+        exit(-1);
     }
 
     m_state_stack.emplace(m_stored_state);
     m_stored_state = nullptr;
+
+    m_state_stack.top()->load_assets();
 
     while(!m_state_stack.empty()){
         if(m_state_stack.top()->quit_requested()){
@@ -128,6 +131,8 @@ void Game::run(){
 
             m_state_stack.emplace(m_stored_state);
             m_stored_state = nullptr;
+
+            m_state_stack.top()->load_assets();
         }
 
         SDL_Delay(33);

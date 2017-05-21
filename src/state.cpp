@@ -12,6 +12,9 @@ void State::add_object(GameObject* object){
     m_object_array.emplace_back(object);
 }
 
+void State::load_assets(){
+}
+
 bool State::pop_requested(){
     return m_pop_requested;
 }

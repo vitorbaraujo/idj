@@ -5,6 +5,7 @@
 #include "sprite.h"
 #include "text.h"
 #include "timer.h"
+#include "resources.h"
 
 class TitleState : public State {
     private:
@@ -20,6 +21,7 @@ class TitleState : public State {
         void render();
         void pause();
         void resume();
+        void load_assets();
 };
 
 #endif

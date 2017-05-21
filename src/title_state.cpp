@@ -47,3 +47,8 @@ void TitleState::pause(){
 
 void TitleState::resume(){
 }
+
+void TitleState::load_assets(){
+    Resources::get_image("img/title.jpg");
+    Resources::get_font("font/Call me maybe.ttf", 40);
+}

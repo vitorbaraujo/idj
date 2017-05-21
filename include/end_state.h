@@ -7,6 +7,7 @@
 #include "text.h"
 #include "state_data.h"
 #include "timer.h"
+#include "resources.h"
 
 class EndState : public State {
     private:
@@ -23,6 +24,7 @@ class EndState : public State {
         void render();
         void pause();
         void resume();
+        void load_assets();
 };
 
 #endif

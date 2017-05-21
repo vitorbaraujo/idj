@@ -63,3 +63,11 @@ void EndState::pause(){
 void EndState::resume(){
 
 }
+
+void EndState::load_assets(){
+    Resources::get_image("img/win.jpg");
+    Resources::get_image("img/lose.jpg");
+    Resources::get_music("audio/endStateWin.ogg");
+    Resources::get_music("audio/endStateLose.ogg");
+    Resources::get_font("font/Call me maybe.ttf", 25);
+}
