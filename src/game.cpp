@@ -54,7 +54,7 @@ Game::Game(string title, int width, int height){
 }
 
 Game::~Game(){
-    if(m_stored_state){
+    if(m_stored_state != nullptr){
         delete(m_stored_state);
     }
 
@@ -62,13 +62,11 @@ Game::~Game(){
         m_state_stack.pop();
     }
 
-    IMG_Quit();
-    Mix_Quit();
     TTF_Quit();
-    Mix_CloseAudio();
+    Mix_Quit();
+    IMG_Quit();
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
-
     SDL_Quit();
 }
 

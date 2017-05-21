@@ -10,7 +10,7 @@ Sound::Sound(string file){
 }
 
 void Sound::play(int times){
-    m_channel = Mix_PlayChannel(-1, m_chunk, times);
+    m_channel = Mix_PlayChannel(-1, m_chunk.get(), times);
 }
 
 void Sound::stop(){
@@ -18,7 +18,7 @@ void Sound::stop(){
 }
 
 void Sound::open(string file){
-    m_chunk = Resources::get_sound(file).get();
+    m_chunk = Resources::get_sound(file);
 }
 
 bool Sound::is_open(){

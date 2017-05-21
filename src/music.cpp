@@ -13,7 +13,7 @@ Music::~Music(){
 }
 
 void Music::play(int times){
-    Mix_PlayMusic(m_music, times);
+    Mix_PlayMusic(m_music.get(), times);
 }
 
 void Music::stop(int ms){
@@ -21,7 +21,7 @@ void Music::stop(int ms){
 }
 
 void Music::open(string file){
-    m_music = Resources::get_music(file).get();
+    m_music = Resources::get_music(file);
 }
 
 bool Music::is_open(){

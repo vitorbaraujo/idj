@@ -4,12 +4,14 @@
 #include "SDL2/SDL_mixer.h"
 
 #include <iostream>
+#include <memory>
 
 using std::string;
+using std::shared_ptr;
 
 class Sound {
     private:
-        Mix_Chunk* m_chunk;
+        shared_ptr<Mix_Chunk> m_chunk;
         int m_channel;
 
     public:

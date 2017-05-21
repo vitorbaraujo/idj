@@ -117,5 +117,5 @@ void Resources::clear_fonts(){
         }
     }
 
-    m_sound_table.clear();
+    m_font_table.clear();
 }
