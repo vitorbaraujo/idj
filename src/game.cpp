@@ -40,6 +40,13 @@ Game::Game(string title, int width, int height){
     }
 
     // dealing with music
+    int mix_init_flags = MIX_INIT_OGG | MIX_INIT_MP3;
+
+    if(Mix_Init(mix_init_flags) != mix_init_flags){
+      printf("Mix_Init error: %s\n", Mix_GetError());
+      return;
+    }
+
     if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0){
         printf("Mix_OpenAudio error: %s\n", Mix_GetError());
         return;
@@ -63,10 +70,11 @@ Game::~Game(){
     }
 
     TTF_Quit();
+    Mix_CloseAudio();
     Mix_Quit();
-    IMG_Quit();
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
+    IMG_Quit();
     SDL_Quit();
 }
 
