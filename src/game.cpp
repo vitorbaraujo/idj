@@ -9,7 +9,7 @@ Game::Game(string title, int width, int height){
     m_frame_start = 0;
 
     if(m_instance == nullptr){
-        m_instance = this; 
+        m_instance = this;
     }
 
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0){
@@ -39,15 +39,42 @@ Game::Game(string title, int width, int height){
         return;
     }
 
-    m_state = new State();
+    // dealing with music
+    int mix_init_flags = MIX_INIT_OGG | MIX_INIT_MP3;
+
+    if(Mix_Init(mix_init_flags) != mix_init_flags){
+      printf("Mix_Init error: %s\n", Mix_GetError());
+      return;
+    }
+
+    if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0){
+        printf("Mix_OpenAudio error: %s\n", Mix_GetError());
+        return;
+    }
+
+    if(TTF_Init() == -1){
+        printf("TTF_init error: %s\n", TTF_GetError());
+        return;
+    }
+
+    m_stored_state = nullptr;
 }
 
 Game::~Game(){
-    delete(m_state);
+    if(m_stored_state != nullptr){
+        delete(m_stored_state);
+    }
 
-    IMG_Quit();
+    while(!m_state_stack.empty()){
+        m_state_stack.pop();
+    }
+
+    TTF_Quit();
+    Mix_CloseAudio();
+    Mix_Quit();
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -59,32 +86,78 @@ SDL_Renderer* Game::get_renderer(){
     return m_renderer;
 }
 
-State* Game::get_state(){
-    return m_state;
+State& Game::get_current_state(){
+    return *(m_state_stack.top());
+}
+
+void Game::push(State* state){
+    m_stored_state = state;
 }
 
 void Game::run(){
-    m_state->load_assets();
+    // if there is no initial state, end the game
+    if(!m_stored_state){
+        printf("No initial state was given. Closing the game.\n");
+        exit(-1);
+    }
 
-    while(!m_state->quit_requested()){
+    m_state_stack.emplace(m_stored_state);
+    m_stored_state = nullptr;
+
+    m_state_stack.top()->load_assets();
+
+    while(!m_state_stack.empty()){
+        if(m_state_stack.top()->quit_requested()){
+            // ensure state stack is empty before freeing resources
+            while(!m_state_stack.empty()){
+                m_state_stack.pop();
+            }
+
+            break;
+        }
+
         calculate_delta_time();
+
         InputManager::get_instance().update();
-        m_state->update(get_delta_time());
-        m_state->render();
+        m_state_stack.top()->update(get_delta_time());
+        m_state_stack.top()->render();
 
         SDL_RenderPresent(m_renderer);
+
+        if(m_state_stack.top()->pop_requested()){
+            m_state_stack.pop();
+
+            if(!m_state_stack.empty()){
+                m_state_stack.top()->resume();
+            }
+        }
+
+        if(m_stored_state){
+            if(!m_state_stack.empty()){
+                m_state_stack.top()->pause();
+            }
+
+            m_state_stack.emplace(m_stored_state);
+            m_stored_state = nullptr;
+
+            m_state_stack.top()->load_assets();
+        }
+
         SDL_Delay(33);
     }
 
     Resources::clear_images();
+    Resources::clear_musics();
+    Resources::clear_sounds();
+    Resources::clear_fonts();
+}
+
+double Game::get_delta_time(){
+    return m_dt;
 }
 
 void Game::calculate_delta_time(){
     unsigned int current_time = SDL_GetTicks();
     m_dt = (current_time - m_frame_start) / 1000.0;
     m_frame_start = current_time;
-}
-
-double Game::get_delta_time(){
-    return m_dt;
 }

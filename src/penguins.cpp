@@ -1,13 +1,16 @@
 #include "penguins.h"
 #include "bullet.h"
-#include "state.h"
+#include "stage_state.h"
 #include "game.h"
 #include "animation.h"
+#include "sound.h"
 
 #define MAX_SPEED 300.0
 #define MIN_SPEED -300.0
-
+#define MAP_WIDTH 1408
+#define MAP_HEIGHT 1280
 #define BULLET_TIME 0.5
+#define GUN_COOLDOWN 0.5
 
 Penguins* Penguins::m_player;
 
@@ -33,9 +36,11 @@ void Penguins::update(double dt){
     m_timer.update(dt);
 
     if(is_dead()){
+        Sound sound("audio/boom.wav");
+        sound.play(0); // loops + 1 times
+
         Animation *animation = new Animation(m_box.get_x(), m_box.get_y(), m_rotation, "img/penguindeath.png", 5, 0.1, 0.5, true);
-        State *state = Game::get_instance().get_state();
-        state->add_object(animation);    
+        Game::get_instance().get_current_state().add_object(animation);
 
         Camera::unfollow();
     }
@@ -48,7 +53,7 @@ void Penguins::update(double dt){
     double acceleration = 10;
 
     if(input_manager.is_key_down(W_KEY)){
-        m_linear_speed = min(m_linear_speed + acceleration, MAX_SPEED);     
+        m_linear_speed = min(m_linear_speed + acceleration, MAX_SPEED);
     }
     else if(input_manager.is_key_down(S_KEY)){
         m_linear_speed = max(m_linear_speed - acceleration, MIN_SPEED);
@@ -65,7 +70,7 @@ void Penguins::update(double dt){
 
     m_cannon_angle = atan2(mouse_y - m_box.get_y(), mouse_x - m_box.get_x());
 
-    if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON) && m_timer.get() > 1.0){
+    if(input_manager.on_mouse_press(LEFT_MOUSE_BUTTON) && m_timer.get() > GUN_COOLDOWN){
         m_timer.restart();
         shoot();
     }
@@ -74,8 +79,17 @@ void Penguins::update(double dt){
 
     m_speed = Vector(dt * m_linear_speed * cos(rad_rotation), dt * m_linear_speed * sin(rad_rotation));
 
-    m_box.set_x(m_box.get_x() + m_speed.get_x());
-    m_box.set_y(m_box.get_y() + m_speed.get_y());
+    double updated_x = m_box.get_x() + m_speed.get_x();
+    double updated_y = m_box.get_y() + m_speed.get_y();
+
+    // make penguin walk only on map
+    if(updated_x > MAP_WIDTH) m_box.set_x(MAP_WIDTH);
+    else if(updated_x < 0) m_box.set_x(0);
+    else m_box.set_x(updated_x);
+
+    if(updated_y > MAP_HEIGHT) m_box.set_y(MAP_HEIGHT);
+    else if(updated_y < 0) m_box.set_y(0);
+    else m_box.set_y(updated_y);
 }
 
 void Penguins::render(){
@@ -112,8 +126,7 @@ void Penguins::shoot(){
 
     Bullet *bullet = new Bullet(cannon_end.get_x(), cannon_end.get_y(), m_cannon_angle, speed, max_distance, "img/penguinbullet.png", BULLET_TIME, 4, false);
 
-    State *state = Game::get_instance().get_state();
-    state->add_object(bullet);
+    Game::get_instance().get_current_state().add_object(bullet);
 }
 
 void Penguins::notify_collision(GameObject& other){

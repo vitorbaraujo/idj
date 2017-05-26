@@ -2,22 +2,29 @@
 #define GAME_H
 
 #include <iostream>
+#include <stack>
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
+#include "SDL2/SDL_ttf.h"
 
 #include "state.h"
 
 using std::string;
+using std::stack;
 
 class Game {
     private:
-        static Game* m_instance;
-        SDL_Window* m_window;
-        SDL_Renderer* m_renderer;
-        State* m_state;
         int m_frame_start;
         double m_dt;
+
+        static Game* m_instance;
+
+        State* m_stored_state;
+        SDL_Window* m_window;
+        SDL_Renderer* m_renderer;
+        stack< unique_ptr<State> > m_state_stack;
 
         void calculate_delta_time();
 
@@ -27,7 +34,9 @@ class Game {
 
         static Game& get_instance();
         SDL_Renderer* get_renderer();
-        State* get_state();
+
+        State& get_current_state();
+        void push(State* state);
         void run();
         double get_delta_time();
 };

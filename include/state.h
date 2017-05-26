@@ -2,40 +2,39 @@
 #define STATE_H
 
 #include <iostream>
-#include <vector>
 #include <memory> // unique_ptr
-
-#include "SDL2/SDL.h"
+#include <vector>
 
 #include "game_object.h"
-#include "tile_set.h"
-#include "tile_map.h"
 
 using std::vector;
 using std::unique_ptr;
 
-// FIXME
-#include "rectangle.h"
-
-class Sprite;
-
 class State {
-    private:
-        Sprite* m_bg;
-        TileSet* m_tile_set;
-        TileMap* m_tile_map;
-        bool m_requested_quit;
-        vector< unique_ptr<GameObject> > m_objects_array;
-
     public:
         State();
-        ~State();
+        virtual ~State();
 
+        virtual void update(double dt) = 0;
+        virtual void render() = 0;
+
+        virtual void pause() = 0;
+        virtual void resume() = 0;
+
+        virtual void add_object(GameObject* object);
+
+        virtual void load_assets();
+
+        bool pop_requested();
         bool quit_requested();
-        void update(double dt);
-        void render();
-        void load_assets();
-        void add_object(GameObject *ptr);
+
+    protected:
+        virtual void update_array(double dt);
+        virtual void render_array();
+
+        bool m_pop_requested;
+        bool m_quit_requested;
+        vector< unique_ptr<GameObject> > m_object_array;
 };
 
 #endif

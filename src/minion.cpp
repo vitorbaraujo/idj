@@ -2,7 +2,7 @@
 #include "minion.h"
 #include "camera.h"
 #include "bullet.h"
-#include "state.h"
+#include "stage_state.h"
 #include "game.h"
 
 #define OFFSET 100
@@ -55,8 +55,7 @@ void Minion::shoot(Vector pos){
 
     Bullet *bullet = new Bullet(m_box.get_x(), m_box.get_y(), angle, speed, max_distance, "img/minionbullet2.png", 1, 3, true);
 
-    State *state = Game::get_instance().get_state();
-    state->add_object(bullet);
+    Game::get_instance().get_current_state().add_object(bullet);
 }
 
 void Minion::notify_collision(GameObject&){

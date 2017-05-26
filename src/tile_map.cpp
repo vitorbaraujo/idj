@@ -6,7 +6,6 @@ TileMap::TileMap(string file, TileSet* tile_set) {
 }
 
 TileMap::~TileMap(){
-    delete(m_tile_set);
 }
 
 void TileMap::load(string file){
@@ -84,4 +83,3 @@ int TileMap::get_height(){
 int TileMap::get_depth(){
     return m_map_depth;
 }
-
